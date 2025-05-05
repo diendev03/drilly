@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "115570425248",
+    "firebase_url": "https://drilly-diendev-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "drilly-diendev",
+    "storage_bucket": "drilly-diendev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115570425248:android:a6fb22f1e2cc1088c2b8c5",
+        "android_client_info": {
+          "package_name": "com.diendev.drilly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115570425248-mk6oihmq3drh9ftegd1h7l3upa3v2u42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGBc2XQC4Q1LvWvJJwjYGjBROn6-488FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "115570425248-mk6oihmq3drh9ftegd1h7l3upa3v2u42.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "115570425248-989gjilmp8rcv6gbkgrm0j0tbups2llp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.diendev.drilly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

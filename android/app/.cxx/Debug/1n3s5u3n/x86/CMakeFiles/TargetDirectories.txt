@@ -1,0 +1,2 @@
+/Users/inc.devnailtech/Documents/App/STUDIO-APP-WMS/android/app/.cxx/Debug/1n3s5u3n/x86/CMakeFiles/edit_cache.dir
+/Users/inc.devnailtech/Documents/App/STUDIO-APP-WMS/android/app/.cxx/Debug/1n3s5u3n/x86/CMakeFiles/rebuild_cache.dir

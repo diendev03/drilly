@@ -1,0 +1,14 @@
+name: sssalon
+
+packages:
+  - .
+
+scripts:
+  get:
+    run: flutter pub get
+  build_runner:
+    run: flutter clean && flutter pub get && flutter packages pub run build_runner build --delete-conflicting-outputs
+  clean:
+    run: flutter clean
+  gen_l10n:
+    run: flutter pub run intl_utils:generate
