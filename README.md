@@ -1,6 +1,6 @@
-# 💸 Drillance – Track Your Growth, Own Your Life
+# 💸 Drilly – Track Your Growth, Own Your Life
 
-**Drillance** is a personal finance and fitness tracking app designed to help you build discipline, balance, and long-term success.
+**Drilly** is a personal finance and fitness tracking app designed to help you build discipline, balance, and long-term success.
 
 > 🧠 *"Discipline is freedom"* – Small consistent actions today lead to greatness tomorrow.
 
@@ -9,7 +9,7 @@
 ## 👨‍💻 Author
 
 **Huỳnh Quốc Diện** (aka **D-Ray**)  
-🔥 Flutter Developer | Stress Release Coach | Creator of Drillance
+🔥 Flutter Developer | Stress Release Coach | Creator of Drilly
 
 ---
 
@@ -34,10 +34,12 @@
 
 - [Flutter](https://flutter.dev/)
 - [BLoC State Management](https://bloclibrary.dev/)
-- [Firebase](https://firebase.google.com/)
+- [Firebase](https://firebase.google.com/) - for authentication.
 - [Shared Preferences](https://pub.dev/packages/shared_preferences)
 - [Dio](https://pub.dev/packages/dio) – for API handling
 - [Intl](https://pub.dev/packages/intl) – for i18n & localization
+- [Supabase](https://supabase.io/) – for backend services (real-time database, storage, etc.)
+
 
 ---
 
