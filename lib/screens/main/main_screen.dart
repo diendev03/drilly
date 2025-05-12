@@ -79,11 +79,11 @@ class _MainScreenState extends State<MainScreen> {
                       child: PageView(
                         controller: pageController,
                         physics: const NeverScrollableScrollPhysics(),
-                        children: const [
-                          HomeScreen(),
-                          MessageScreen(),
-                          TaskScreen(),
-                          NotificationScreen(),
+                        children: [
+                          const HomeScreen(),
+                          const MessageScreen(),
+                          const TaskScreen(),
+                          const NotificationScreen(),
                           ProfileScreen(),
                         ],
                       ),

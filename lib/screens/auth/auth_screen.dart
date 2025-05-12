@@ -103,7 +103,7 @@ class AuthScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              CustomCard(
+                              CustomButton(
                                 text: S.current.login,
                                 width: screen.width * 0.5,
                                 action: () => bloc.add(Login()),
@@ -127,7 +127,7 @@ class AuthScreen extends StatelessWidget {
                                 controller: bloc.rePasswordEC,
                               ),
                               const SizedBox(height: 20),
-                              CustomCard(
+                              CustomButton(
                                 text: S.current.registration,
                                 width: screen.width * 0.5,
                                 action: () => bloc.add(Registration()),
@@ -143,7 +143,7 @@ class AuthScreen extends StatelessWidget {
                                 controller: bloc.emailEC,
                               ),
                               const SizedBox(height: 20),
-                              CustomCard(
+                              CustomButton(
                                 text: S.current.sendResetLink,
                                 width: screen.width * 0.5,
                                 action: (){

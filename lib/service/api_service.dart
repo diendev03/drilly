@@ -1,39 +1,57 @@
-import 'package:drilly/model/drillier.dart';
+import 'package:drilly/model/account.dart';
+import 'package:drilly/model/profile.dart';
+import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/date_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApiService {
-
-  Future<Drillier?> signUpAndSaveUser({
+  final SupabaseClient _supabase = Supabase.instance.client;
+  String accountTable = ConstRes.accounts;
+  String profileTable = ConstRes.profiles;
+  Future<Account?> signUpAndSaveUser({
     required String email,
     required String password,
   }) async {
-    UserCredential firebaseResponse = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      final existingUser =
+          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+      if (existingUser.isNotEmpty) {
+        throw FirebaseAuthException(
+          code: 'email-already-in-use',
+          message: 'Email này đã được sử dụng cho một tài khoản khác.',
+        );
+      }
 
-    String uid = firebaseResponse.user!.uid;
+      UserCredential firebaseResponse =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    Drillier newUser = Drillier(
-      uuid: uid,
-      email: email,
-      password: password,
-      createAt: DateTimeUtils().getCurrentDate(),
-    );
+      String uid = firebaseResponse.user!.uid;
 
-    final insertResponse = await Supabase.instance.client
-        .from('drilliers')
-        .insert(newUser.toMap())
-        .select()
-        .single();
+      Account account = Account(
+        uuid: uid,
+        email: email,
+        password: password,
+        createAt: DateTimeUtils.getCurrentDate(),
+      );
 
-    Drillier account = Drillier.fromMap(insertResponse);
+      final insertAccount = await _supabase
+          .from(accountTable)
+          .insert(account.toMap())
+          .select()
+          .single();
 
-    return account;
+      await _supabase.from(profileTable).insert(Profile.empty(uid).toMap());
+      Account newAccount = Account.fromMap(insertAccount);
+
+      return newAccount;
+    } catch (e) {
+      return null;
+    }
   }
-
 
   Future<void> forgotPassword(String email) async {
     try {
@@ -44,29 +62,45 @@ class ApiService {
     }
   }
 
-  Future<Drillier?> login({
+  Future<Account?> login({
     required String email,
     required String password,
   }) async {
     try {
-      UserCredential firebaseResponse = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential firebaseResponse =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       String uid = firebaseResponse.user!.uid;
+      Account? user = await getRecord<Account>(
+          tableName: accountTable,
+          columnName: ConstRes.uuid,
+          value: uid,
+          fromMap: (map) => Account.fromMap(map));
+      return user;
+    } catch (e) {
+      return null;
+    }
+  }
 
-      final response = await Supabase.instance.client
-          .from('drilliers')
+  Future<T?> getRecord<T>({
+    required String tableName,
+    required String columnName,
+    required String value,
+    required T Function(Map<String, dynamic>) fromMap,
+  }) async {
+    try {
+      final response = await _supabase
+          .from(tableName)
           .select()
-          .eq('uuid', uid)
+          .eq(columnName, value)
           .single();
 
-       Drillier user = Drillier.fromMap(response);
-
-      return user;
-
+      // Chuyển đổi Map thành đối tượng của loại T (Account, Profile, v.v...)
+      return fromMap(response);
     } catch (e) {
-      print('Lỗi khi đăng nhập: $e');
+      print('Lỗi khi lấy dữ liệu: $e');
       return null;
     }
   }

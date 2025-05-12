@@ -68,8 +68,15 @@ class _WelComeScreenState extends State<WelComeScreen> {
                         children: [
                           const SizedBox(height: 20),
                           GestureDetector(
-                            onTap: () => Get.off(() => const AuthScreen()),
-                            child: CustomCard(
+                            onTap: () async {
+                              bool checkLogin= await AppRes.checkAccount();
+                              if(checkLogin==true){
+                                Get.off(() => const MainScreen());
+                              }else{
+                                Get.off(() => const AuthScreen());
+                              }
+                            },
+                            child: CustomButton(
                               text: S.current.startExperiencing,
                             ),
                           ),
@@ -94,7 +101,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                   );
                                 } else {
                                   return Text(
-                                    DateTimeUtils().getCurrentDate(
+                                    DateTimeUtils.getCurrentDate(
                                         format: ConstRes.versionDate),
                                     style: const TextStyle(
                                         fontSize: 16, color: Colors.grey),

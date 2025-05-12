@@ -250,6 +250,26 @@ class S {
     );
   }
 
+  /// `Profile information retrieved successfully`
+  String get profileInformationRetrievedSuccessfully {
+    return Intl.message(
+      'Profile information retrieved successfully',
+      name: 'profileInformationRetrievedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to retrieve profile information`
+  String get failedToRetrieveProfileInformation {
+    return Intl.message(
+      'Failed to retrieve profile information',
+      name: 'failedToRetrieveProfileInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sunday`
   String get sunday {
     return Intl.message('Sunday', name: 'sunday', desc: '', args: []);
@@ -323,6 +343,11 @@ class S {
   /// `Follow`
   String get follow {
     return Intl.message('Follow', name: 'follow', desc: '', args: []);
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
 
   /// `Login successful`

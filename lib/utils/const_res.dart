@@ -25,5 +25,14 @@ class ConstRes {
   ///DateFormat
   static const String normalDate='dd/MM/yyyy';
   static const String versionDate = 'yy.MM.dd';
+  static const String fullDate = 'yyyy-MM-dd HH:mm:ss';
+
+  ///Local key
+  static const String uuid = 'uuid';
+  static const String timeLogin = 'time_login';
+
+  ///DB key
+  static const String accounts = 'accounts';
+  static const String profiles = 'profiles';
 
 }

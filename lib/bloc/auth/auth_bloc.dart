@@ -1,4 +1,4 @@
-import 'package:drilly/model/drillier.dart';
+import 'package:drilly/model/account.dart';
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/service/api_service.dart';
 import 'package:drilly/utils/app_res.dart';
@@ -35,12 +35,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await AppRes.showCustomLoader();
         if (validationLogin()) {
           try {
-            Drillier? drillier=await ApiService().login(
+            Account? drillier=await ApiService().login(
               email: emailEC.text, password:passwordEC.text,
             );
             if(drillier!=null){
               Navigator.of(Get.context!).pop();
               AppRes.showSnackBar(S.current.login);
+              AppRes.saveLogin(uuid: drillier.uuid);
               Get.offAll(()=>const MainScreen());
             }
           } catch (e) {

@@ -169,7 +169,7 @@ class ToolBarWidget extends StatelessWidget {
   }
 }
 
-class CustomCard extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final VoidCallback? action;
   final Color? backgroundColor;
   final double width;
@@ -177,7 +177,7 @@ class CustomCard extends StatelessWidget {
   final String text;
   final TextStyle textStyle;
 
-  const CustomCard({
+  const CustomButton({
     super.key,
     this.backgroundColor = ColorRes.primary,
     this.width = double.infinity,
@@ -191,21 +191,25 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: action,
-        child: Card(
-          color: backgroundColor,
-          shape: RoundedRectangleBorder(
+        child: Container(
+          width: width,
+          height: height,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: backgroundColor,
             borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 5,
+                offset: const Offset(0, 2), // Shadow position
+              ),
+            ],
           ),
-          elevation: 5,
-          child: Container(
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              text,
-              style: textStyle,
-            ),
+          child: Text(
+            text,
+            style: textStyle,
           ),
         ));
   }
@@ -231,6 +235,64 @@ class CustomNetworkImage extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(AssetRes.chicken, fit: BoxFit.cover);
       },
+    );
+  }
+}
+
+class DropdownAction {
+  final String title;
+  final IconData icon;
+  final VoidCallback action;
+
+  DropdownAction({
+    required this.title,
+    required this.icon,
+    required this.action,
+  });
+}
+
+class CustomDropdownMenu extends StatelessWidget {
+  final List<DropdownAction> actions;
+  final Widget child;
+
+  const CustomDropdownMenu({
+    super.key,
+    required this.actions,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey buttonKey = GlobalKey();
+
+    return GestureDetector(
+      key: buttonKey, // Gán GlobalKey cho ElevatedButton
+      onTap: () {
+        final RenderBox renderBox = buttonKey.currentContext!.findRenderObject() as RenderBox;
+        final position = renderBox.localToGlobal(Offset.zero);
+
+        showMenu(
+          context: context,
+          position: RelativeRect.fromLTRB(position.dx, position.dy + renderBox.size.height, position.dx, 0.0),
+          items: actions.map((DropdownAction action) {
+            return PopupMenuItem<DropdownAction>(
+              value: action,
+              child: Row(
+                children: [
+                  Icon(action.icon, color: Colors.black),
+                  const SizedBox(width: 10),
+                  Text(action.title),
+                ],
+              ),
+            );
+          }).toList(),
+        ).then((value) {
+          if (value != null) {
+            value.action();
+          }
+        });
+      },
+      child: child,
     );
   }
 }

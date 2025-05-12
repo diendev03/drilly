@@ -34,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "employeeLoginPanel": MessageLookupByLibrary.simpleMessage(
       "Employee Login Panel",
     ),
+    "failedToRetrieveProfileInformation": MessageLookupByLibrary.simpleMessage(
+      "Failed to retrieve profile information",
+    ),
     "follow": MessageLookupByLibrary.simpleMessage("Follow"),
     "forgotYourPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
@@ -43,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginSuccessful": MessageLookupByLibrary.simpleMessage("Login successful"),
+    "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "message": MessageLookupByLibrary.simpleMessage("Message"),
     "monday": MessageLookupByLibrary.simpleMessage("Monday"),
     "next": MessageLookupByLibrary.simpleMessage("Next"),
@@ -63,6 +67,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "pressBackAgainToExit": MessageLookupByLibrary.simpleMessage(
       "Press back again to exit!",
     ),
+    "profileInformationRetrievedSuccessfully":
+        MessageLookupByLibrary.simpleMessage(
+          "Profile information retrieved successfully",
+        ),
     "rePassword": MessageLookupByLibrary.simpleMessage("Re-enter password"),
     "registration": MessageLookupByLibrary.simpleMessage("Registration"),
     "registrationFailed": MessageLookupByLibrary.simpleMessage(

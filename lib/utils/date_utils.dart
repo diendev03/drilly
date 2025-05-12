@@ -9,7 +9,7 @@ import 'package:drilly/utils/style_res.dart';
 
 class DateTimeUtils {
 
-  String getCurrentDate({String format=ConstRes.normalDate}) {
+ static String getCurrentDate({String format=ConstRes.normalDate}) {
     DateTime now = DateTime.now();
 
     String formattedDate = DateFormat(format).format(now);
