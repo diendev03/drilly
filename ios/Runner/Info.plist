@@ -44,20 +44,10 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>Need camera access for uploading images</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>For Show on map</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>For Show on map</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Need location access for updating nearby friends</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app will use your location to show features near you.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Need microphone access for uploading audio</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Need photo library access for saving and uploading images</string>
+    <string>We need access to your photo library to select images</string>
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take pictures</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

@@ -1,9 +1,19 @@
 import 'package:drilly/utils/color_res.dart';
 import 'package:flutter/material.dart';
 
-const buttonTextStyle = TextStyle(
+const boldText = TextStyle(
   color: ColorRes.white,
   fontWeight: FontWeight.bold,
+  fontSize: 18,
+);
+const normalText = TextStyle(
+  color: ColorRes.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 18,
+);
+const italicText = TextStyle(
+  color: ColorRes.white,
+  fontStyle: FontStyle.italic,
   fontSize: 18,
 );
 

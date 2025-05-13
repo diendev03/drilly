@@ -345,6 +345,41 @@ class S {
     return Intl.message('Follow', name: 'follow', desc: '', args: []);
   }
 
+  /// `Follower`
+  String get follower {
+    return Intl.message('Follower', name: 'follower', desc: '', args: []);
+  }
+
+  /// `Following`
+  String get following {
+    return Intl.message('Following', name: 'following', desc: '', args: []);
+  }
+
+  /// `Achievements`
+  String get achievements {
+    return Intl.message(
+      'Achievements',
+      name: 'achievements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Up load new avatar`
+  String get uploadNewAvatar {
+    return Intl.message(
+      'Up load new avatar',
+      name: 'uploadNewAvatar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View avatar`
+  String get viewAvatar {
+    return Intl.message('View avatar', name: 'viewAvatar', desc: '', args: []);
+  }
+
   /// `Logout`
   String get logout {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);

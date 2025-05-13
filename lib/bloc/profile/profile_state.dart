@@ -13,12 +13,12 @@ class ProfileState extends Equatable {
   });
 
   ProfileState copyWith({
-    Profile? user,
+    Profile? profile,
     String? errorMessage,
     String? message,
   }) {
     return ProfileState(
-      profile: user ?? this.profile,
+      profile: profile ?? this.profile,
       errorMessage: errorMessage,
       message: message,
     );

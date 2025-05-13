@@ -1,14 +1,21 @@
+// ignore_for_file: await_only_futures, avoid_print
+
+import 'dart:io';
+
 import 'package:drilly/model/account.dart';
 import 'package:drilly/model/profile.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/date_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cloudinary/cloudinary.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ApiService {
   final SupabaseClient _supabase = Supabase.instance.client;
   String accountTable = ConstRes.accounts;
   String profileTable = ConstRes.profiles;
+  Dio dio = Dio();
   Future<Account?> signUpAndSaveUser({
     required String email,
     required String password,
@@ -43,8 +50,8 @@ class ApiService {
           .insert(account.toMap())
           .select()
           .single();
-
-      await _supabase.from(profileTable).insert(Profile.empty(uid).toMap());
+String defaultName= "User${await getCountOfTable(accountTable).toString()}";
+      await _supabase.from(profileTable).insert(Profile.empty(uuid: uid,name:defaultName).toMap());
       Account newAccount = Account.fromMap(insertAccount);
 
       return newAccount;
@@ -97,11 +104,60 @@ class ApiService {
           .eq(columnName, value)
           .single();
 
-      // Chuyển đổi Map thành đối tượng của loại T (Account, Profile, v.v...)
       return fromMap(response);
     } catch (e) {
-      print('Lỗi khi lấy dữ liệu: $e');
       return null;
+    }
+  }
+
+  Future<int> getCountOfTable(String tableName) async {
+    try {
+      final response = await _supabase
+          .from(tableName)
+          .select()
+          .count();
+
+      return response.count;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<String?> uploadImage(XFile imageXFile) async {
+    try {
+      final fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
+      File imageFile = File(imageXFile.path);
+
+     await _supabase.storage.from('images').upload(fileName, imageFile);
+
+      final imageUrl = await _supabase.storage.from('images').getPublicUrl(fileName);
+
+      return imageUrl;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<void> updateColumn({
+    required String tableName,
+    required String columnName,
+    required String columnValue,
+    required String conditionColumn,
+    required String conditionValue,
+  }) async {
+    print("object:$tableName-$columnName-$columnValue-$conditionColumn-$conditionValue");
+    try {
+      final response = await _supabase
+          .from(tableName)
+          .update({columnName: columnValue})
+          .eq(conditionColumn, conditionValue)
+          .select()
+          .single();
+
+
+      print("Cập nhật thành công! ${response.toString()}");
+    } catch (e) {
+      print("Lỗi khi thực hiện update: $e");
     }
   }
 }
