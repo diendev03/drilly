@@ -1,6 +1,5 @@
 class Profile {
   String uuid;
-  String username;
   String name;
   String avatar;
   String birthday;
@@ -11,7 +10,6 @@ class Profile {
 
   Profile({
     required this.uuid,
-    required this.username,
     required this.name,
     required this.avatar,
     required this.birthday,
@@ -21,11 +19,9 @@ class Profile {
     this.achievements = 0,
   });
 
-  // Chuyển Profile thành Map để lưu trữ
   Map<String, dynamic> toMap() {
     return {
       "uuid": uuid,
-      "username": username,
       "name": name,
       "avatar": avatar,
       "birthday": birthday,
@@ -36,11 +32,9 @@ class Profile {
     };
   }
 
-  // Tạo Profile từ Map
   static Profile fromMap(Map<String, dynamic> map) {
     return Profile(
       uuid: map["uuid"],
-      username: map['username'] ?? '',
       name: map['name'] ?? '',
       avatar: map['avatar'] ?? '',
       birthday: map['birthday'] ?? '',
@@ -51,23 +45,30 @@ class Profile {
     );
   }
 
-  // Factory method để tạo Profile trống
-  factory Profile.empty(String uuid) {
+  factory Profile.empty({
+    String uuid = "",
+    String name = "",
+    String avatar = "",
+    String birthday = "",
+    String phone = "",
+    int follower = 0,
+    int following = 0,
+    int achievements = 0,
+  }) {
     return Profile(
       uuid: uuid,
-      username: "",
-      name: "",
-      avatar: "",
-      birthday: "",
-      phone: "",
-      follower: 0,
-      following: 0,
-      achievements: 0,
+      name: name,
+      avatar: avatar,
+      birthday: birthday,
+      phone: phone,
+      follower: follower,
+      following: following,
+      achievements: achievements,
     );
   }
 
   @override
   String toString() {
-    return 'Profile{uuid: $uuid, username: $username, name: $name, avatar: $avatar, birthday: $birthday, phone: $phone, follower: $follower, following: $following, achievements: $achievements}';
+    return 'Profile{uuid: $uuid, name: $name, avatar: $avatar, birthday: $birthday, phone: $phone, follower: $follower, following: $following, achievements: $achievements}';
   }
 }

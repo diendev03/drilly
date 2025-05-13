@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "achievements": MessageLookupByLibrary.simpleMessage("Achievements"),
     "appName": MessageLookupByLibrary.simpleMessage("WMS"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "changeLanguage": MessageLookupByLibrary.simpleMessage("Change Language"),
@@ -38,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Failed to retrieve profile information",
     ),
     "follow": MessageLookupByLibrary.simpleMessage("Follow"),
+    "follower": MessageLookupByLibrary.simpleMessage("Follower"),
+    "following": MessageLookupByLibrary.simpleMessage("Following"),
     "forgotYourPassword": MessageLookupByLibrary.simpleMessage(
       "Forgot password?",
     ),
@@ -99,8 +102,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
     "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
+    "uploadNewAvatar": MessageLookupByLibrary.simpleMessage(
+      "Up load new avatar",
+    ),
     "username": MessageLookupByLibrary.simpleMessage("Username"),
     "version": MessageLookupByLibrary.simpleMessage("Version"),
+    "viewAvatar": MessageLookupByLibrary.simpleMessage("View avatar"),
     "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday"),
   };
 }

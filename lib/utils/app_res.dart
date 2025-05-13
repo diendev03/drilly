@@ -7,51 +7,55 @@ import 'package:drilly/utils/date_utils.dart';
 import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'custom/custom_dialog.dart';
 
 class AppRes {
-static void logout(){
-  SharePref().clearAll();
-  Get.offAll(()=>const AuthScreen());
-}
-static void saveLogin({required String uuid}){
-  SharePref sharePref=SharePref();
-  sharePref.saveString(ConstRes.uuid, uuid);
-  sharePref.saveString(ConstRes.timeLogin, DateTimeUtils.getCurrentDate(format:ConstRes.fullDate));
-}
-
-static Future<bool> checkAccount() async {
-  final sharePref = SharePref();
-
-  final uuid = await sharePref.getString(ConstRes.uuid);
-  final timeLoginStr = await sharePref.getString(ConstRes.timeLogin);
-  if (uuid == null || timeLoginStr == null) {
-    return false;
+  static void logout() {
+    SharePref().clearAll();
+    Get.offAll(() => const AuthScreen());
   }
 
-  final timeLogin = DateFormat(ConstRes.fullDate).parse(timeLoginStr);
-
-  final currentTime = DateTime.now();
-
-  final difference = currentTime.difference(timeLogin);
-
-  if (difference.inDays < 7) {
-    return true;
-  } else {
-    return false;
+  static void saveLogin({required String uuid}) {
+    SharePref sharePref = SharePref();
+    sharePref.saveString(ConstRes.uuid, uuid);
+    sharePref.saveString(ConstRes.timeLogin,
+        DateTimeUtils.getCurrentDate(format: ConstRes.fullDate));
   }
-}
 
-  static Future<SnackbarController?> showSnackBar(
-      String msg,{bool type=false}
-      ) async {
+  static Future<bool> checkAccount() async {
+    final sharePref = SharePref();
+
+    final uuid = await sharePref.getString(ConstRes.uuid);
+    final timeLoginStr = await sharePref.getString(ConstRes.timeLogin);
+    if (uuid == null || timeLoginStr == null) {
+      return false;
+    }
+
+    final timeLogin = DateFormat(ConstRes.fullDate).parse(timeLoginStr);
+
+    final currentTime = DateTime.now();
+
+    final difference = currentTime.difference(timeLogin);
+
+    if (difference.inDays < 7) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<SnackbarController?> showSnackBar(String msg,
+      {bool type = false}) async {
     if (msg.replaceAll(' ', '').isEmpty) return null;
     return Get.showSnackbar(
       GetSnackBar(
-        backgroundColor: type==false?ColorRes.accent.withOpacity(.35):ColorRes.primary.withOpacity(.25),
+        backgroundColor: type == false
+            ? ColorRes.accent.withOpacity(.35)
+            : ColorRes.primary.withOpacity(.25),
         titleText: Container(),
         // backgroundColor: positive ? ColorRes.white : ColorRes.bitterSweet1,
         message: msg,
@@ -95,8 +99,30 @@ static Future<bool> checkAccount() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
+
   Future<String> getAppTheme() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
+  }
+
+  Future<XFile?> pickImage(ImagePicker picker) async {
+    final XFile? image =
+        await picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+
+  Future<List<XFile>> pickMultipleImages(ImagePicker? picker) async {
+    ImagePicker imagePicker=picker??ImagePicker();
+    final List<XFile> images = await imagePicker.pickMultiImage();
+    return images;
+  }
+
+  static void showBottomSheet(BuildContext context,Widget child) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return child;
+      },
+    );
   }
 }

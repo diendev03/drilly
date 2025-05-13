@@ -1,5 +1,6 @@
 // ignore_for_file: unused_import, deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/utils/app_res.dart';
@@ -47,9 +48,7 @@ class _TextWithTextFieldWidgetState extends State<TextWithTextFieldWidget> {
       children: [
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10)
-          ),
+              color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child: TextField(
             controller: widget.controller,
             onChanged: (value) {},
@@ -149,12 +148,14 @@ class ToolBarWidget extends StatelessWidget {
                 }
               },
               child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 15,
-                  vertical:10,
-                ),
-                child: Icon(Icons.arrow_back, size: 30,)
-              ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 10,
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 30,
+                  )),
             ),
             Text(
               title,
@@ -184,7 +185,7 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.action,
     required this.text,
-    this.textStyle = buttonTextStyle,
+    this.textStyle = boldText,
   });
 
   @override
@@ -268,12 +269,14 @@ class CustomDropdownMenu extends StatelessWidget {
     return GestureDetector(
       key: buttonKey, // Gán GlobalKey cho ElevatedButton
       onTap: () {
-        final RenderBox renderBox = buttonKey.currentContext!.findRenderObject() as RenderBox;
+        final RenderBox renderBox =
+            buttonKey.currentContext!.findRenderObject() as RenderBox;
         final position = renderBox.localToGlobal(Offset.zero);
 
         showMenu(
           context: context,
-          position: RelativeRect.fromLTRB(position.dx, position.dy + renderBox.size.height, position.dx, 0.0),
+          position: RelativeRect.fromLTRB(position.dx,
+              position.dy + renderBox.size.height, position.dx, 0.0),
           items: actions.map((DropdownAction action) {
             return PopupMenuItem<DropdownAction>(
               value: action,
@@ -293,6 +296,32 @@ class CustomDropdownMenu extends StatelessWidget {
         });
       },
       child: child,
+    );
+  }
+}
+
+class ImageFromUrl extends StatelessWidget {
+  final String imageUrl;
+
+  const ImageFromUrl({super.key, required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorRes.black,
+      appBar: AppBar(
+        backgroundColor: ColorRes.black,
+      ),
+      body: Center(
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) =>
+              const CircularProgressIndicator(), // Hiển thị placeholder trong khi tải ảnh
+          errorWidget: (context, url, error) =>
+              const Icon(Icons.error), // Hiển thị nếu có lỗi khi tải ảnh
+          fit: BoxFit.cover, // Tùy chọn kiểu fit cho ảnh
+        ),
+      ),
     );
   }
 }
