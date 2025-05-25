@@ -35,17 +35,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await AppRes.showCustomLoader();
         if (validationLogin()) {
           try {
-            Account? drillier=await ApiService().login(
+            final response=await ApiService().login(
               email: emailEC.text, password:passwordEC.text,
             );
-            if(drillier!=null){
+            if(response!=null){
               Navigator.of(Get.context!).pop();
               AppRes.showSnackBar(S.current.login);
-              AppRes.saveLogin(uuid: drillier.uuid);
-              Get.offAll(()=>const MainScreen());
+              print("Login response: ${response.data['uuid']}");
+              AppRes.saveLogin(uuid: response.data['data']['uuid']);
+              Get.off(()=>const MainScreen());
             }
           } catch (e) {
-            Navigator.of(Get.context!).pop();
+            print("Login error: $e");
+            if (Navigator.of(Get.context!).canPop()) {
+              Navigator.of(Get.context!).pop();
+            }
             AppRes.showSnackBar(e.toString());
           }
         }

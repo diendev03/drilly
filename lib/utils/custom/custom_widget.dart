@@ -7,8 +7,6 @@ import 'package:drilly/utils/app_res.dart';
 import 'package:drilly/utils/asset_res.dart';
 import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/generated/l10n.dart';
-import 'package:drilly/utils/device_utils.dart';
-import 'package:drilly/utils/string_utils.dart';
 import 'package:drilly/utils/style_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

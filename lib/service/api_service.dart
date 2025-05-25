@@ -1,22 +1,16 @@
 // ignore_for_file: await_only_futures, avoid_print
-
-import 'dart:io';
-
-import 'package:drilly/model/account.dart';
-import 'package:drilly/model/profile.dart';
 import 'package:drilly/utils/const_res.dart';
-import 'package:drilly/utils/date_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:cloudinary/cloudinary.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'api_client.dart';
 
 class ApiService {
-  final SupabaseClient _supabase = Supabase.instance.client;
   String accountTable = ConstRes.accounts;
   String profileTable = ConstRes.profiles;
   Dio dio = Dio();
-  Future<Account?> signUpAndSaveUser({
+  final api = ApiClient();
+  Future<Response?> signUpAndSaveUser({
     required String email,
     required String password,
   }) async {
@@ -38,24 +32,21 @@ class ApiService {
 
       String uid = firebaseResponse.user!.uid;
 
-      Account account = Account(
-        uuid: uid,
-        email: email,
-        password: password,
-        createAt: DateTimeUtils.getCurrentDate(),
-      );
+      Response response = await api.post('/accounts', data: {
+        'uuid': uid,
+        'email': email,
+        'password': password,
+      });
 
-      final insertAccount = await _supabase
-          .from(accountTable)
-          .insert(account.toMap())
-          .select()
-          .single();
-String defaultName= "User${await getCountOfTable(accountTable).toString()}";
-      await _supabase.from(profileTable).insert(Profile.empty(uuid: uid,name:defaultName).toMap());
-      Account newAccount = Account.fromMap(insertAccount);
-
-      return newAccount;
+      if (response.data["status"]== true) {
+        print('Tạo account thành công: ${response.data}');
+        return response;
+      } else {
+        print('Tạo account thất bại: ${response.statusMessage}');
+        return null;
+      }
     } catch (e) {
+      print('Tạo account thất bại: ${e.toString()}');
       return null;
     }
   }
@@ -69,95 +60,26 @@ String defaultName= "User${await getCountOfTable(accountTable).toString()}";
     }
   }
 
-  Future<Account?> login({
+  Future<Response?> login({
     required String email,
     required String password,
   }) async {
     try {
-      UserCredential firebaseResponse =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      String uid = firebaseResponse.user!.uid;
-      Account? user = await getRecord<Account>(
-          tableName: accountTable,
-          columnName: ConstRes.uuid,
-          value: uid,
-          fromMap: (map) => Account.fromMap(map));
-      return user;
+      final response = await api.post('/login', data: {
+        ConstRes.email: email,
+        ConstRes.password: password,
+      });
+      if (response.data["status"]== true) {
+        print('Login thành công: ${response.data}');
+        print('tra ve: ${response.toString()}');
+        return response;
+      } else {
+        print('Login thất bại: ${response.statusMessage}');
+        return null;
+      }
     } catch (e) {
       return null;
     }
   }
 
-  Future<T?> getRecord<T>({
-    required String tableName,
-    required String columnName,
-    required String value,
-    required T Function(Map<String, dynamic>) fromMap,
-  }) async {
-    try {
-      final response = await _supabase
-          .from(tableName)
-          .select()
-          .eq(columnName, value)
-          .single();
-
-      return fromMap(response);
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<int> getCountOfTable(String tableName) async {
-    try {
-      final response = await _supabase
-          .from(tableName)
-          .select()
-          .count();
-
-      return response.count;
-    } catch (e) {
-      return 0;
-    }
-  }
-
-  Future<String?> uploadImage(XFile imageXFile) async {
-    try {
-      final fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
-      File imageFile = File(imageXFile.path);
-
-     await _supabase.storage.from('images').upload(fileName, imageFile);
-
-      final imageUrl = await _supabase.storage.from('images').getPublicUrl(fileName);
-
-      return imageUrl;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<void> updateColumn({
-    required String tableName,
-    required String columnName,
-    required String columnValue,
-    required String conditionColumn,
-    required String conditionValue,
-  }) async {
-    print("object:$tableName-$columnName-$columnValue-$conditionColumn-$conditionValue");
-    try {
-      final response = await _supabase
-          .from(tableName)
-          .update({columnName: columnValue})
-          .eq(conditionColumn, conditionValue)
-          .select()
-          .single();
-
-
-      print("Cập nhật thành công! ${response.toString()}");
-    } catch (e) {
-      print("Lỗi khi thực hiện update: $e");
-    }
-  }
 }

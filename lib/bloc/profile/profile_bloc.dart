@@ -16,18 +16,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<GetInfo>(
       (event, emit) async {
         String? uuid = await SharePref().getString(ConstRes.uuid);
-        if (uuid != null) {
-          Profile? profile = await ApiService().getRecord<Profile>(
-              tableName: ConstRes.profiles,
-              columnName: ConstRes.uuid,
-              value: uuid,
-              fromMap: (map) => Profile.fromMap(map));
-          if (profile != null) {
-            emit(state.copyWith(
-                profile: profile,
-                message: S.current.profileInformationRetrievedSuccessfully));
-          }
-        }
+        // if (uuid != null) {
+        //   Profile? profile = await ApiService().getRecord<Profile>(
+        //       tableName: ConstRes.profiles,
+        //       columnName: ConstRes.uuid,
+        //       value: uuid,
+        //       fromMap: (map) => Profile.fromMap(map));
+        //   if (profile != null) {
+        //     emit(state.copyWith(
+        //         profile: profile,
+        //         message: S.current.profileInformationRetrievedSuccessfully));
+        //   }
+        // }
       },
     );
     on<UpdateAvatar>(
@@ -38,12 +38,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if (xFile != null) {
           String? url = await CloudinaryService().uploadImage(xFile);
           if (url != null) {
-            ApiService().updateColumn(
-                tableName: ConstRes.profiles,
-                columnName: "avatar",
-                columnValue: url,
-                conditionColumn: "uuid",
-                conditionValue: uuid);
+            // ApiService().updateColumn(
+            //     tableName: ConstRes.profiles,
+            //     columnName: "avatar",
+            //     columnValue: url,
+            //     conditionColumn: "uuid",
+            //     conditionValue: uuid);
           }
         }
       },

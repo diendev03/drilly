@@ -1,11 +1,10 @@
 class ConstRes {
+  static const String baseUrl = 'https://4f7e-2402-9d80-3b9-e32f-607d-c72a-c0b2-ef89.ngrok-free.app';
+
   ///ClouDiary key
   static const String apiKey = '211428272922525';
   static const String apiSecret = 'EwQ-Z_GiuvDyn8MfskXIH3PTUWI';
   static const String cloudName = 'dl95asm0f';
-  ///ClouDiary key
-  static const String supabaseUrl = 'https://rrwtyluiqegaydbzxhkb.supabase.co';
-  static const String anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJyd3R5bHVpcWVnYXlkYnp4aGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYzNjA3ODUsImV4cCI6MjA2MTkzNjc4NX0.GbXBtGKFMIM0jPLb15qGodEVZDi18yVDODuK8YZuaFY';
   /// Api body keyword
   static const String grantType = 'grant_type';
   static const String username = 'username';
