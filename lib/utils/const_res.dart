@@ -1,5 +1,5 @@
 class ConstRes {
-  static const String baseUrl = 'https://4f7e-2402-9d80-3b9-e32f-607d-c72a-c0b2-ef89.ngrok-free.app';
+  static const String baseUrl = 'https://41d0-2402-9d80-3b9-e32f-607d-c72a-c0b2-ef89.ngrok-free.app';
 
   ///ClouDiary key
   static const String apiKey = '211428272922525';

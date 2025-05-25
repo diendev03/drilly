@@ -1,6 +1,6 @@
 import 'package:drilly/model/account.dart';
 import 'package:drilly/screens/main/main_screen.dart';
-import 'package:drilly/service/api_service.dart';
+import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/utils/app_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await AppRes.showCustomLoader();
         if (validationLogin()) {
           try {
-            final response=await ApiService().login(
+            final response=await AuthService().login(
               email: emailEC.text, password:passwordEC.text,
             );
             if(response!=null){
@@ -62,7 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await AppRes.showCustomLoader();
         if (validationRegistration()) {
           try {
-            final account = await ApiService().signUpAndSaveUser(
+            final account = await AuthService().signUpAndSaveUser(
                 email: emailEC.text, password: passwordEC.text);
             if (account != null) {
               Navigator.of(Get.context!).pop();
@@ -82,7 +82,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       (event, emit) async {
         AppRes.hideKeyboard(Get.context!);
         await AppRes.showCustomLoader();
-        await ApiService().forgotPassword(emailEC.text);
+        await AuthService().forgotPassword(emailEC.text);
         Navigator.of(Get.context!).pop();
         AppRes.showSnackBar(S.current.checkYourEmail, type: true);
         add(ShowLogin());

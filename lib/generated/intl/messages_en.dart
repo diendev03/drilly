@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "employeeLoginPanel": MessageLookupByLibrary.simpleMessage(
       "Employee Login Panel",
     ),
+    "expense": MessageLookupByLibrary.simpleMessage("Expense"),
     "failedToRetrieveProfileInformation": MessageLookupByLibrary.simpleMessage(
       "Failed to retrieve profile information",
     ),
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "friday": MessageLookupByLibrary.simpleMessage("Friday"),
     "inbox": MessageLookupByLibrary.simpleMessage("Inbox"),
+    "income": MessageLookupByLibrary.simpleMessage("Income"),
     "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginSuccessful": MessageLookupByLibrary.simpleMessage("Login successful"),

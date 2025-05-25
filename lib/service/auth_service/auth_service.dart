@@ -3,9 +3,9 @@ import 'package:drilly/utils/const_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloudinary/cloudinary.dart';
 
-import 'api_client.dart';
+import '../api_client.dart';
 
-class ApiService {
+class AuthService {
   String accountTable = ConstRes.accounts;
   String profileTable = ConstRes.profiles;
   Dio dio = Dio();

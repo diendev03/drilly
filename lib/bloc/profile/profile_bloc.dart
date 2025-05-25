@@ -1,7 +1,7 @@
 import 'package:drilly/bloc/profile/profile_event.dart';
 import 'package:drilly/bloc/profile/profile_state.dart';
 import 'package:drilly/model/profile.dart';
-import 'package:drilly/service/api_service.dart';
+import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/service/cloudianry_service.dart';
 import 'package:drilly/utils/app_res.dart';
 import 'package:drilly/utils/const_res.dart';

@@ -48,6 +48,8 @@
   "uploadNewAvatar": "Up load new avatar",
   "viewAvatar": "View avatar",
   "logout": "Logout",
+  "income": "Income",
+  "expense": "Expense",
   "loginSuccessful": "Login successful",
   "sendResetLink": "Send reset link",
   "registrationSuccessful": "Registration successful",
