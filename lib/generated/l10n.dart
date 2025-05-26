@@ -445,6 +445,96 @@ class S {
     );
   }
 
+  /// `Not find your ID`
+  String get notFindYourId {
+    return Intl.message(
+      'Not find your ID',
+      name: 'notFindYourId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your birthday`
+  String get chooseYourBirthday {
+    return Intl.message(
+      'Choose your birthday',
+      name: 'chooseYourBirthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `change`
+  String get change {
+    return Intl.message('change', name: 'change', desc: '', args: []);
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message('Name', name: 'name', desc: '', args: []);
+  }
+
+  /// `Number phone`
+  String get numberPhone {
+    return Intl.message(
+      'Number phone',
+      name: 'numberPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No image selected`
+  String get noImageSelected {
+    return Intl.message(
+      'No image selected',
+      name: 'noImageSelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
+
+  /// `Upload failed`
+  String get uploadFailed {
+    return Intl.message(
+      'Upload failed',
+      name: 'uploadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update failed`
+  String get updateFailed {
+    return Intl.message(
+      'Update failed',
+      name: 'updateFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Press back again to exit!`
   String get pressBackAgainToExit {
     return Intl.message(

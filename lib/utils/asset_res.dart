@@ -3,6 +3,7 @@ class AssetRes {
   static const String logo = 'assets/images/logo.png';
   static const String logoTransparent = 'assets/images/logo_transparent.png';
   static const String backgroundLogin = 'assets/images/background_login.png';
+  static const String loading = 'assets/images/loading.png';
   static const String chicken = 'assets/images/chicken.png';
 
   /// Icons

@@ -10,6 +10,7 @@ class AuthService {
   String profileTable = ConstRes.profiles;
   Dio dio = Dio();
   final api = ApiClient();
+  //Create user in Firebase and save to database
   Future<Response?> signUpAndSaveUser({
     required String email,
     required String password,
@@ -50,7 +51,7 @@ class AuthService {
       return null;
     }
   }
-
+  //Forgot password
   Future<void> forgotPassword(String email) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
@@ -59,7 +60,7 @@ class AuthService {
       print("Lỗi khi gửi email reset mật khẩu: $e");
     }
   }
-
+  //Login
   Future<Response?> login({
     required String email,
     required String password,
@@ -81,5 +82,49 @@ class AuthService {
       return null;
     }
   }
-
+  //Get user profile
+  Future<Response?> getUserProfile({required String uuid}) async {
+    try {
+      Response response = await api.get('/profiles', params: {
+        'uuid': uuid,
+      });
+      if (response.data["status"] == true) {
+        print('Lấy thông tin người dùng thành công: ${response.data}');
+        return response;
+      } else {
+        print('Lấy thông tin người dùng thất bại: ${response.statusMessage}');
+        return null;
+      }
+    } catch (e) {
+      print('Lỗi khi lấy thông tin người dùng: ${e.toString()}');
+      return null;
+    }
+  }
+  //Update user profile
+  Future<Response> updateProfile({
+    required String uuid,
+    required String name,
+    required String birthday,
+    required String phone,
+    String? avatarUrl,
+  }) async {
+    try {
+      Response response =await api.put('/profiles', data: {
+        'uuid': uuid,
+        'name': name,
+        'birthday': birthday,
+        'phone': phone,
+        'avatar': avatarUrl ?? '',
+      });
+      if (response.data["status"] == true) {
+        print('Cập nhật thông tin người dùng thành công: ${response.data}');
+      } else {
+        print('Cập nhật thông tin người dùng thất bại: ${response.statusMessage}');
+      }
+      return response;
+    } catch (e) {
+      print('Lỗi khi cập nhật thông tin người dùng: ${e.toString()}');
+      rethrow;
+    }
+  }
 }
