@@ -16,7 +16,7 @@ class CategoryModel {
       id: json['id'],
       name: json['name'],
       type: json['type'],
-      icon: json['icon'],
+      icon: json['icons'],
     );
   }
 
@@ -25,7 +25,7 @@ class CategoryModel {
       'id': id,
       'name': name,
       'type': type,
-      'icon': icon,
+      'icons': icon,
     };
   }
 }

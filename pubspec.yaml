@@ -84,7 +84,7 @@ flutter_icons:
   android: true
   ios: true
   windows: true
-  image_path: 'assets/images/logo.jpg' # Path to your app icon image
+  image_path: 'assets/images/logo.jpg' # Path to your app icons image
   
 flutter:
 
@@ -96,7 +96,8 @@ flutter:
 
   assets:
     - assets/images/
-    
+    - assets/icons/
+
 #  fonts:
 #    - family: GilroyBlack
 #      fonts:

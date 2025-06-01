@@ -313,7 +313,7 @@ class DropdownAction {
   });
 }
 
-class DatePicker extends StatelessWidget {
+class DatePicker extends StatefulWidget {
   final String? initialDate;
   final ValueChanged<String> onDateChanged;
 
@@ -322,6 +322,19 @@ class DatePicker extends StatelessWidget {
     this.initialDate,
     required this.onDateChanged,
   });
+
+  @override
+  _DatePickerState createState() => _DatePickerState();
+}
+
+class _DatePickerState extends State<DatePicker> {
+  late String? _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = widget.initialDate;
+  }
 
   DateTime _parseDate(String? dateStr) {
     if (dateStr == null) {
@@ -338,7 +351,7 @@ class DatePicker extends StatelessWidget {
 
   Future<void> _showDatePicker(BuildContext context) async {
     final now = DateTime.now();
-    final initial = _parseDate(initialDate);
+    final initial = _parseDate(_selectedDate);
     final firstDate = DateTime(now.year - 100);
     final lastDate = DateTime(now.year);
 
@@ -364,10 +377,13 @@ class DatePicker extends StatelessWidget {
                 ),
               ),
               CupertinoButton(
-                child: Text(S.current.done),
+                child: const Text('Done'),
                 onPressed: () {
                   final formatted = DateFormat('yyyy-MM-dd').format(tempPickedDate);
-                  onDateChanged(formatted);
+                  setState(() {
+                    _selectedDate = formatted;
+                  });
+                  widget.onDateChanged(formatted);
                   Navigator.of(context).pop();
                 },
               )
@@ -380,7 +396,7 @@ class DatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayDate = initialDate ?? S.current.chooseYourBirthday;
+    final displayDate = _selectedDate ?? S.current.chooseYourBirthday;
 
     return GestureDetector(
       onTap: () => _showDatePicker(context),
@@ -392,13 +408,13 @@ class DatePicker extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const Icon(Icons.calendar_today_outlined, color: ColorRes.primary),
+            const Icon(Icons.calendar_today_outlined, color: Colors.blue),
             const SizedBox(width: 12),
             Text(
               displayDate,
               style: TextStyle(
                 fontSize: 16,
-                color: initialDate == null ? Colors.grey.shade500 : Colors.black,
+                color: _selectedDate == null ? Colors.grey.shade500 : Colors.black,
               ),
             ),
           ],
@@ -554,7 +570,7 @@ class _SpinningImageWidgetState extends State<SpinningImageWidget>
   }
 
   Widget _buildChild() {
-    // Ưu tiên: child -> imagePath -> imageUrl -> default icon
+    // Ưu tiên: child -> imagePath -> imageUrl -> default icons
     if (widget.child != null) {
       return widget.child!;
     } else if (widget.imagePath != null) {
@@ -590,7 +606,7 @@ class _SpinningImageWidgetState extends State<SpinningImageWidget>
         },
       );
     } else {
-      // Default spinner icon
+      // Default spinner icons
       return Icon(
         Icons.refresh,
         size: widget.size * 0.8,

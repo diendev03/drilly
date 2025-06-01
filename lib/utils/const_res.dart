@@ -1,5 +1,7 @@
+import 'package:drilly/generated/l10n.dart';
+
 class ConstRes {
-  static const String baseUrl = 'https://8f96-2402-9d80-3f6-ee49-8c47-bcc5-d956-467e.ngrok-free.app';
+  static const String baseUrl = 'https://efdd-103-199-36-84.ngrok-free.app';
 
   ///ClouDiary key
   static const String apiKey = '211428272922525';
@@ -34,4 +36,8 @@ class ConstRes {
   static const String accounts = 'accounts';
   static const String profiles = 'profiles';
 
+  /// Transaction
+  static List<String> transactionTypes = [S.current.income, S.current.expense];
+  static List<String> transactionCategories = [S.current.food, S.current.salary, S.current.shopping,S.current.entertainment ];
+  static List<String> transactionPayments = [S.current.cash, S.current.bankCard,S.current.momo];
 }

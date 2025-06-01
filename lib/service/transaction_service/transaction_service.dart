@@ -10,6 +10,7 @@ class TransactionService {
 
   Future<Response?> getAllTransactions({required String uuid}) async {
     try {
+      print('Lấy danh sách giao dịch');
       Response response = await api.get('/transactions', params: {
         'uuid': uuid,
       });

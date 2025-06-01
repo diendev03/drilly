@@ -10,15 +10,15 @@ class ApiClient {
   ApiClient._internal() {
     BaseOptions options = BaseOptions(
       baseUrl: ConstRes.baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
       headers: {
         'Content-Type': 'application/json',
       },
     );
 
     dio = Dio(options);
-
+print('Dio instance created with base URL:  ${dio.options.baseUrl}/your_endpoint');
     // Gắn interceptor nếu cần
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
