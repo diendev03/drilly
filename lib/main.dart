@@ -1,5 +1,4 @@
 import 'package:drilly/utils/app_theme.dart';
-import 'package:drilly/utils/const_res.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,17 +7,12 @@ import 'package:get/route_manager.dart';
 import 'package:drilly/generated/l10n.dart';
 import 'package:drilly/screens/welcome/welcome_screen.dart';
 import 'package:drilly/utils/app_utils.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   await Future.wait([
     Firebase.initializeApp(),
-    Supabase.initialize(
-      url: ConstRes.supabaseUrl,
-      anonKey: ConstRes.anonKey,
-    ),
   ]);
   runApp(
     const RestartWidget(

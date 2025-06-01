@@ -9,7 +9,6 @@ import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/custom/custom_widget.dart';
 import 'package:drilly/utils/date_utils.dart';
-import 'package:drilly/utils/device_utils.dart';
 import 'package:drilly/generated/l10n.dart';
 import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +33,6 @@ class _WelComeScreenState extends State<WelComeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceUtils().init(context);
     return Scaffold(
       body: Stack(
         children: [

@@ -1,10 +1,11 @@
 import 'package:drilly/bloc/profile/profile_event.dart';
 import 'package:drilly/bloc/profile/profile_state.dart';
 import 'package:drilly/model/profile.dart';
-import 'package:drilly/service/api_service.dart';
+import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/service/cloudianry_service.dart';
 import 'package:drilly/utils/app_res.dart';
 import 'package:drilly/utils/const_res.dart';
+import 'package:drilly/utils/enum.dart';
 import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,18 +16,25 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(const ProfileState()) {
     on<GetInfo>(
       (event, emit) async {
-        String? uuid = await SharePref().getString(ConstRes.uuid);
-        if (uuid != null) {
-          Profile? profile = await ApiService().getRecord<Profile>(
-              tableName: ConstRes.profiles,
-              columnName: ConstRes.uuid,
-              value: uuid,
-              fromMap: (map) => Profile.fromMap(map));
-          if (profile != null) {
-            emit(state.copyWith(
+        try{
+          String? uuid = await SharePref().getString(ConstRes.uuid);
+          if (uuid != null) {
+            final response = await AuthService().getUserProfile(uuid: uuid);
+            if (response != null) {
+              Profile profile = Profile.fromMap(response.data['data']);
+              emit(state.copyWith(
                 profile: profile,
-                message: S.current.profileInformationRetrievedSuccessfully));
+                status: ScreenState.success,
+                message: response.data['message'],));
+            }
+          } else {
+            emit(state.copyWith(
+                status: ScreenState.error,
+                errorMessage: S.current.notFindYourId));
           }
+        } catch (e) {
+          emit(state.copyWith(
+              status: ScreenState.error, errorMessage: e.toString()));
         }
       },
     );
@@ -38,12 +46,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if (xFile != null) {
           String? url = await CloudinaryService().uploadImage(xFile);
           if (url != null) {
-            ApiService().updateColumn(
-                tableName: ConstRes.profiles,
-                columnName: "avatar",
-                columnValue: url,
-                conditionColumn: "uuid",
-                conditionValue: uuid);
+            // ApiService().updateColumn(
+            //     tableName: ConstRes.profiles,
+            //     columnName: "avatar",
+            //     columnValue: url,
+            //     conditionColumn: "uuid",
+            //     conditionValue: uuid);
           }
         }
       },

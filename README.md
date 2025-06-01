@@ -39,6 +39,7 @@
 - [Dio](https://pub.dev/packages/dio) – for API handling
 - [Intl](https://pub.dev/packages/intl) – for i18n & localization
 - [Supabase](https://supabase.io/) – for backend services (real-time database, storage, etc.)
+- [Cloudinary](https://cloudinary.com/) – for image storage and management
 
 
 ---

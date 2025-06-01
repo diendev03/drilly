@@ -1,17 +1,45 @@
 // ignore_for_file: unused_import, deprecated_member_use
 
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/utils/app_res.dart';
 import 'package:drilly/utils/asset_res.dart';
 import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/generated/l10n.dart';
-import 'package:drilly/utils/device_utils.dart';
-import 'package:drilly/utils/string_utils.dart';
 import 'package:drilly/utils/style_res.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
+class BaseScreen extends StatelessWidget {
+  final AppBar? appBar;
+  final Widget body;
+
+  const BaseScreen({
+    super.key,
+    this.appBar,
+    required this.body,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: appBar,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: body,
+        ),
+      ),
+    );
+  }
+}
 
 class TextWithTextFieldWidget extends StatefulWidget {
   final String title;
@@ -240,6 +268,39 @@ class CustomNetworkImage extends StatelessWidget {
   }
 }
 
+class XFileImageWidget extends StatelessWidget {
+  final XFile? xFile;
+  final double width;
+  final double height;
+
+  const XFileImageWidget({
+    super.key,
+    required this.xFile,
+    this.width = 100,
+    this.height = 100,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (xFile == null) {
+      // Nếu chưa có ảnh, hiển thị placeholder
+      return Container(
+        width: width,
+        height: height,
+        color: Colors.grey[300],
+        child: const Icon(Icons.image, size: 40, color: Colors.grey),
+      );
+    }
+
+    return Image.file(
+      File(xFile!.path),
+      width: width,
+      height: height,
+      fit: BoxFit.cover,
+    );
+  }
+}
+
 class DropdownAction {
   final String title;
   final IconData icon;
@@ -250,6 +311,101 @@ class DropdownAction {
     required this.icon,
     required this.action,
   });
+}
+
+class DatePicker extends StatelessWidget {
+  final String? initialDate;
+  final ValueChanged<String> onDateChanged;
+
+  const DatePicker({
+    super.key,
+    this.initialDate,
+    required this.onDateChanged,
+  });
+
+  DateTime _parseDate(String? dateStr) {
+    if (dateStr == null) {
+      final now = DateTime.now();
+      return DateTime(now.year - 20, now.month, now.day);
+    }
+    try {
+      return DateFormat('yyyy-MM-dd').parse(dateStr);
+    } catch (_) {
+      final now = DateTime.now();
+      return DateTime(now.year - 20, now.month, now.day);
+    }
+  }
+
+  Future<void> _showDatePicker(BuildContext context) async {
+    final now = DateTime.now();
+    final initial = _parseDate(initialDate);
+    final firstDate = DateTime(now.year - 100);
+    final lastDate = DateTime(now.year);
+
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        DateTime tempPickedDate = initial;
+        return Container(
+          height: 275,
+          color: Colors.white,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 200,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  initialDateTime: initial,
+                  minimumDate: firstDate,
+                  maximumDate: lastDate,
+                  onDateTimeChanged: (DateTime newDate) {
+                    tempPickedDate = newDate;
+                  },
+                ),
+              ),
+              CupertinoButton(
+                child: Text(S.current.done),
+                onPressed: () {
+                  final formatted = DateFormat('yyyy-MM-dd').format(tempPickedDate);
+                  onDateChanged(formatted);
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final displayDate = initialDate ?? S.current.chooseYourBirthday;
+
+    return GestureDetector(
+      onTap: () => _showDatePicker(context),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade400),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.calendar_today_outlined, color: ColorRes.primary),
+            const SizedBox(width: 12),
+            Text(
+              displayDate,
+              style: TextStyle(
+                fontSize: 16,
+                color: initialDate == null ? Colors.grey.shade500 : Colors.black,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class CustomDropdownMenu extends StatelessWidget {
@@ -267,7 +423,7 @@ class CustomDropdownMenu extends StatelessWidget {
     final GlobalKey buttonKey = GlobalKey();
 
     return GestureDetector(
-      key: buttonKey, // Gán GlobalKey cho ElevatedButton
+      key: buttonKey,
       onTap: () {
         final RenderBox renderBox =
             buttonKey.currentContext!.findRenderObject() as RenderBox;
@@ -323,5 +479,153 @@ class ImageFromUrl extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SpinningImageWidget extends StatefulWidget {
+  final String? imagePath;        // Đường dẫn ảnh local
+  final String? imageUrl;         // URL ảnh network
+  final Widget? child;            // Widget tùy chỉnh thay vì ảnh
+  final double size;              // Kích thước spinner
+  final Duration duration;        // Thời gian 1 vòng quay
+  final bool clockwise;           // Chiều quay (true: thuận chiều kim đồng hồ)
+
+  const SpinningImageWidget({
+    super.key,
+    this.imagePath,
+    this.imageUrl,
+    this.child,
+    this.size = 50.0,
+    this.duration = const Duration(seconds: 1),
+    this.clockwise = true,
+  });
+
+  @override
+  State<SpinningImageWidget> createState() => _SpinningImageWidgetState();
+}
+
+class _SpinningImageWidgetState extends State<SpinningImageWidget>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+
+    _animation = Tween<double>(
+      begin: 0.0,
+      end: widget.clockwise ? 1.0 : -1.0,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.linear,
+    ));
+
+    // Bắt đầu animation và lặp vô hạn
+    _animationController.repeat();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.rotate(
+          angle: _animation.value * 2 * 3.14159, // 2π radians = 360 độ
+          child: SizedBox(
+            width: widget.size,
+            height: widget.size,
+            child: _buildChild(),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildChild() {
+    // Ưu tiên: child -> imagePath -> imageUrl -> default icon
+    if (widget.child != null) {
+      return widget.child!;
+    } else if (widget.imagePath != null) {
+      return Image.asset(
+        widget.imagePath!,
+        width: widget.size,
+        height: widget.size,
+        fit: BoxFit.contain,
+      );
+    } else if (widget.imageUrl != null) {
+      return Image.network(
+        widget.imageUrl!,
+        width: widget.size,
+        height: widget.size,
+        fit: BoxFit.contain,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                  loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
+        errorBuilder: (context, error, stackTrace) {
+          return Icon(
+            Icons.refresh,
+            size: widget.size * 0.8,
+            color: Colors.grey,
+          );
+        },
+      );
+    } else {
+      // Default spinner icon
+      return Icon(
+        Icons.refresh,
+        size: widget.size * 0.8,
+        color: Colors.blue,
+      );
+    }
+  }
+}
+
+class SpaceWidth extends StatelessWidget {
+  final double? width;
+
+  const SpaceWidth(this.width, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return width != null
+        ? SizedBox(
+            width: width ?? 0,
+          )
+        : const Spacer();
+  }
+}
+
+class SpaceHeight extends StatelessWidget {
+  final double? height;
+
+  const SpaceHeight(this.height, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return height != null
+        ? SizedBox(
+            width: height ?? 0,
+          )
+        : const Spacer();
   }
 }

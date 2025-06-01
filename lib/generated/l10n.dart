@@ -385,6 +385,16 @@ class S {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
 
+  /// `Income`
+  String get income {
+    return Intl.message('Income', name: 'income', desc: '', args: []);
+  }
+
+  /// `Expense`
+  String get expense {
+    return Intl.message('Expense', name: 'expense', desc: '', args: []);
+  }
+
   /// `Login successful`
   String get loginSuccessful {
     return Intl.message(
@@ -430,6 +440,96 @@ class S {
     return Intl.message(
       'Check your email',
       name: 'checkYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not find your ID`
+  String get notFindYourId {
+    return Intl.message(
+      'Not find your ID',
+      name: 'notFindYourId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose your birthday`
+  String get chooseYourBirthday {
+    return Intl.message(
+      'Choose your birthday',
+      name: 'chooseYourBirthday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message('Done', name: 'done', desc: '', args: []);
+  }
+
+  /// `change`
+  String get change {
+    return Intl.message('change', name: 'change', desc: '', args: []);
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message('Name', name: 'name', desc: '', args: []);
+  }
+
+  /// `Number phone`
+  String get numberPhone {
+    return Intl.message(
+      'Number phone',
+      name: 'numberPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No image selected`
+  String get noImageSelected {
+    return Intl.message(
+      'No image selected',
+      name: 'noImageSelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
+
+  /// `Upload failed`
+  String get uploadFailed {
+    return Intl.message(
+      'Upload failed',
+      name: 'uploadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update failed`
+  String get updateFailed {
+    return Intl.message(
+      'Update failed',
+      name: 'updateFailed',
       desc: '',
       args: [],
     );
