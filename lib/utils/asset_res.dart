@@ -7,10 +7,11 @@ class AssetRes {
   static const String chicken = 'assets/images/chicken.png';
 
   /// Icons
-  static const String icHome = 'assets/images/ic_home.png';
-  static const String icMessage = 'assets/images/ic_message.png';
-  static const String icExercise = 'assets/images/ic_exercise.png';
-  static const String icNotification = 'assets/images/ic_notification.png';
-  static const String icProfile = 'assets/images/ic_profile.png';
+  static const String icHome = 'assets/icons/ic_home.png';
+  static const String icMessage = 'assets/icons/ic_message.png';
+  static const String icExercise = 'assets/icons/ic_exercise.png';
+  static const String icNotification = 'assets/icons/ic_notification.png';
+  static const String icProfile = 'assets/icons/ic_profile.png';
+  static const String icNewTransaction = 'assets/icons/ic_new_transaction.png';
   // Sounds
 }

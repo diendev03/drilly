@@ -66,7 +66,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final response = await api.post('/login', data: {
+      final response = await api.post('/accounts/login', data: {
         ConstRes.email: email,
         ConstRes.password: password,
       });

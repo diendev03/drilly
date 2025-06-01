@@ -55,9 +55,9 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `WMS`
+  /// `Dilly`
   String get appName {
-    return Intl.message('WMS', name: 'appName', desc: '', args: []);
+    return Intl.message('Dilly', name: 'appName', desc: '', args: []);
   }
 
   /// `Employee Login Panel`
@@ -385,16 +385,6 @@ class S {
     return Intl.message('Logout', name: 'logout', desc: '', args: []);
   }
 
-  /// `Income`
-  String get income {
-    return Intl.message('Income', name: 'income', desc: '', args: []);
-  }
-
-  /// `Expense`
-  String get expense {
-    return Intl.message('Expense', name: 'expense', desc: '', args: []);
-  }
-
   /// `Login successful`
   String get loginSuccessful {
     return Intl.message(
@@ -530,6 +520,181 @@ class S {
     return Intl.message(
       'Update failed',
       name: 'updateFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Income`
+  String get income {
+    return Intl.message('Income', name: 'income', desc: '', args: []);
+  }
+
+  /// `Expense`
+  String get expense {
+    return Intl.message('Expense', name: 'expense', desc: '', args: []);
+  }
+
+  /// `Food`
+  String get food {
+    return Intl.message('Food', name: 'food', desc: '', args: []);
+  }
+
+  /// `Salary`
+  String get salary {
+    return Intl.message('Salary', name: 'salary', desc: '', args: []);
+  }
+
+  /// `Shopping`
+  String get shopping {
+    return Intl.message('Shopping', name: 'shopping', desc: '', args: []);
+  }
+
+  /// `Entertainment`
+  String get entertainment {
+    return Intl.message(
+      'Entertainment',
+      name: 'entertainment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash`
+  String get cash {
+    return Intl.message('Cash', name: 'cash', desc: '', args: []);
+  }
+
+  /// `Bank card`
+  String get bankCard {
+    return Intl.message('Bank card', name: 'bankCard', desc: '', args: []);
+  }
+
+  /// `Momo`
+  String get momo {
+    return Intl.message('Momo', name: 'momo', desc: '', args: []);
+  }
+
+  /// `Add Transaction`
+  String get addTransaction {
+    return Intl.message(
+      'Add Transaction',
+      name: 'addTransaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transaction name`
+  String get transactionName {
+    return Intl.message(
+      'Transaction name',
+      name: 'transactionName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot be empty`
+  String get notEmpty {
+    return Intl.message(
+      'Cannot be empty',
+      name: 'notEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message('Amount', name: 'amount', desc: '', args: []);
+  }
+
+  /// `Invalid amount`
+  String get invalidAmount {
+    return Intl.message(
+      'Invalid amount',
+      name: 'invalidAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
+  String get type {
+    return Intl.message('Type', name: 'type', desc: '', args: []);
+  }
+
+  /// `Select transaction type`
+  String get selectType {
+    return Intl.message(
+      'Select transaction type',
+      name: 'selectType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get category {
+    return Intl.message('Category', name: 'category', desc: '', args: []);
+  }
+
+  /// `Select category`
+  String get selectCategory {
+    return Intl.message(
+      'Select category',
+      name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Method`
+  String get paymentMethod {
+    return Intl.message(
+      'Payment Method',
+      name: 'paymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select payment method`
+  String get selectPaymentMethod {
+    return Intl.message(
+      'Select payment method',
+      name: 'selectPaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select transaction date`
+  String get selectTransactionDate {
+    return Intl.message(
+      'Select transaction date',
+      name: 'selectTransactionDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get date {
+    return Intl.message('Date', name: 'date', desc: '', args: []);
+  }
+
+  /// `Note (optional)`
+  String get note {
+    return Intl.message('Note (optional)', name: 'note', desc: '', args: []);
+  }
+
+  /// `Create Transaction`
+  String get createTransaction {
+    return Intl.message(
+      'Create Transaction',
+      name: 'createTransaction',
       desc: '',
       args: [],
     );

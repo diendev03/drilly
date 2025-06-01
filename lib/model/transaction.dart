@@ -1,6 +1,6 @@
 class Transaction {
   final int? id;
-  final String? userId;
+  final String? uuid;
   final int categoryId;
   final int paymentId;
   final String name;
@@ -15,7 +15,7 @@ class Transaction {
 
   Transaction({
     this.id,
-    this.userId,
+    this.uuid,
     required this.categoryId,
     required this.paymentId,
     required this.name,
@@ -32,7 +32,7 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) {
     return Transaction(
       id: json['id'],
-      userId: json['user_id'],
+      uuid: json['uuid'],
       categoryId: json['category_id'],
       paymentId: json['payment_id'],
       name: json['name'],
@@ -50,7 +50,7 @@ class Transaction {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'user_id': userId,
+      'uuid': uuid,
       'category_id': categoryId,
       'payment_id': paymentId,
       'name': name,

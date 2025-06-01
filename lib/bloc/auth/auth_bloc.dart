@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AppRes.hideKeyboard(Get.context!);
 
         await AppRes.showCustomLoader();
-        if (validationLogin()) {
+        if (validationLogin()==true) {
           try {
             final response=await AuthService().login(
               email: emailEC.text, password:passwordEC.text,
@@ -51,6 +51,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
               Navigator.of(Get.context!).pop();
             }
             AppRes.showSnackBar(e.toString());
+          }
+        }else {
+          if (Navigator.of(Get.context!).canPop()) {
+            Navigator.of(Get.context!).pop();
           }
         }
       },
