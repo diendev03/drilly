@@ -1,7 +1,7 @@
 import 'package:drilly/generated/l10n.dart';
 
 class ConstRes {
-  static const String baseUrl = 'https://efdd-103-199-36-84.ngrok-free.app';
+  static const String baseUrl = 'https://b7e4-171-252-153-187.ngrok-free.app';
 
   ///ClouDiary key
   static const String apiKey = '211428272922525';

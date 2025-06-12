@@ -324,10 +324,10 @@ class DatePicker extends StatefulWidget {
   });
 
   @override
-  _DatePickerState createState() => _DatePickerState();
+  DatePickerState createState() => DatePickerState();
 }
 
-class _DatePickerState extends State<DatePicker> {
+class DatePickerState extends State<DatePicker> {
   late String? _selectedDate;
 
   @override

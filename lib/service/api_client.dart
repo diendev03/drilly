@@ -18,32 +18,50 @@ class ApiClient {
     );
 
     dio = Dio(options);
-print('Dio instance created with base URL:  ${dio.options.baseUrl}/your_endpoint');
-    // Gắn interceptor nếu cần
+
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         return handler.next(options);
       },
       onError: (error, handler) {
-        print('Lỗi: ${error.message}');
         return handler.next(error);
       },
     ));
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? params}) async {
-    return await dio.get(path, queryParameters: params);
+  Future<Response> get(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? headers}) async {
+    Options? options;
+    if (headers != null) {
+      options = Options(headers: headers);
+    }
+    return await dio.get(path, queryParameters: params, options: options);
   }
 
-  Future<Response> post(String path, {dynamic data}) async {
-    return await dio.post(path, data: data);
+  Future<Response> post(String path,
+      {dynamic data, Map<String, dynamic>? headers}) async {
+    Options? options;
+    if (headers != null) {
+      options = Options(headers: headers);
+    }
+    return await dio.post(path, data: data, options: options);
   }
 
-  Future<Response> put(String path, {dynamic data}) async {
-    return await dio.put(path, data: data);
+  Future<Response> put(String path,
+      {dynamic data, Map<String, dynamic>? headers}) async {
+    Options? options;
+    if (headers != null) {
+      options = Options(headers: headers);
+    }
+    return await dio.put(path, data: data, options: options);
   }
 
-  Future<Response> delete(String path, {Map<String, dynamic>? params}) async {
-    return await dio.delete(path, queryParameters: params);
+  Future<Response> delete(String path,
+      {Map<String, dynamic>? params, Map<String, dynamic>? headers}) async {
+    Options? options;
+    if (headers != null) {
+      options = Options(headers: headers);
+    }
+    return await dio.delete(path, queryParameters: params, options: options);
   }
 }

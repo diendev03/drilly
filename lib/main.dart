@@ -8,11 +8,15 @@ import 'package:drilly/generated/l10n.dart';
 import 'package:drilly/screens/welcome/welcome_screen.dart';
 import 'package:drilly/utils/app_utils.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   await Future.wait([
-    Firebase.initializeApp(),
+     Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ),
   ]);
   runApp(
     const RestartWidget(

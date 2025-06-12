@@ -33,10 +33,7 @@ class DefaultFirebaseOptions {
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -68,4 +65,15 @@ class DefaultFirebaseOptions {
     iosClientId: '115570425248-989gjilmp8rcv6gbkgrm0j0tbups2llp.apps.googleusercontent.com',
     iosBundleId: 'com.diendev.drilly',
   );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCfSDIqZyd8hVMxwIHtas0If-Ao1wEyT1M',
+    appId: '1:115570425248:web:62b8ab6a174d38cbc2b8c5',
+    messagingSenderId: '115570425248',
+    projectId: 'drilly-diendev',
+    authDomain: 'drilly-diendev.firebaseapp.com',
+    databaseURL: 'https://drilly-diendev-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'drilly-diendev.firebasestorage.app',
+  );
+
 }

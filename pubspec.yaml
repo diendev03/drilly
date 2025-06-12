@@ -58,6 +58,7 @@ dependencies:
   firebase_auth: ^5.5.3
   cached_network_image: ^3.4.1
   pie_chart: ^5.4.0
+  device_info_plus: ^11.4.0
   
 dev_dependencies:
   floor_generator: ^1.1.0

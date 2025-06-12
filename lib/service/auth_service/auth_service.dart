@@ -66,6 +66,7 @@ class AuthService {
     required String password,
   }) async {
     try {
+      print("Đang đăng nhập với email: $email và mật khẩu: $password");
       final response = await api.post('/accounts/login', data: {
         ConstRes.email: email,
         ConstRes.password: password,
@@ -114,7 +115,7 @@ class AuthService {
         'name': name,
         'birthday': birthday,
         'phone': phone,
-        'avatar': avatarUrl ?? '',
+        'avatar': avatarUrl,
       });
       if (response.data["status"] == true) {
         print('Cập nhật thông tin người dùng thành công: ${response.data}');
