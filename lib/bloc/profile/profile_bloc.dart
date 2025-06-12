@@ -40,7 +40,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
     on<UpdateAvatar>(
       (event, emit) async {
-        String uuid = state.profile?.uuid ?? "";
         ImagePicker picker = ImagePicker();
         XFile? xFile = await AppRes().pickImage(picker);
         if (xFile != null) {

@@ -1,4 +1,3 @@
-import 'package:drilly/model/account.dart';
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/utils/app_res.dart';
@@ -41,12 +40,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             if(response!=null){
               Navigator.of(Get.context!).pop();
               AppRes.showSnackBar(S.current.login);
-              print("Login response: ${response.data['uuid']}");
               AppRes.saveLogin(uuid: response.data['data']['uuid']);
               Get.off(()=>const MainScreen());
             }
           } catch (e) {
-            print("Login error: $e");
             if (Navigator.of(Get.context!).canPop()) {
               Navigator.of(Get.context!).pop();
             }

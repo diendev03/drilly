@@ -28,18 +28,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "appName": MessageLookupByLibrary.simpleMessage("Dilly"),
     "bankCard": MessageLookupByLibrary.simpleMessage("Bank card"),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "cannotBeEmpty": MessageLookupByLibrary.simpleMessage("Can not be empty"),
     "cash": MessageLookupByLibrary.simpleMessage("Cash"),
     "category": MessageLookupByLibrary.simpleMessage("Category"),
     "change": MessageLookupByLibrary.simpleMessage("change"),
     "changeLanguage": MessageLookupByLibrary.simpleMessage("Change Language"),
     "checkYourEmail": MessageLookupByLibrary.simpleMessage("Check your email"),
+    "chooseDate": MessageLookupByLibrary.simpleMessage("Choose date"),
     "chooseYourBirthday": MessageLookupByLibrary.simpleMessage(
       "Choose your birthday",
     ),
     "closed": MessageLookupByLibrary.simpleMessage("Closed"),
     "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "continue_": MessageLookupByLibrary.simpleMessage("Continue"),
     "createTransaction": MessageLookupByLibrary.simpleMessage(
-      "Create Transaction",
+      "Create transaction",
     ),
     "date": MessageLookupByLibrary.simpleMessage("Date"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -105,6 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
           "Profile information retrieved successfully",
         ),
     "rePassword": MessageLookupByLibrary.simpleMessage("Re-enter password"),
+    "recurring": MessageLookupByLibrary.simpleMessage("Recurring"),
     "registration": MessageLookupByLibrary.simpleMessage("Registration"),
     "registrationFailed": MessageLookupByLibrary.simpleMessage(
       "Registration failed",
@@ -112,10 +116,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "registrationSuccessful": MessageLookupByLibrary.simpleMessage(
       "Registration successful",
     ),
+    "repeatCycle": MessageLookupByLibrary.simpleMessage("Repeat cycle"),
     "salary": MessageLookupByLibrary.simpleMessage("Salary"),
     "saturday": MessageLookupByLibrary.simpleMessage("Saturday"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+    "selectAllFields": MessageLookupByLibrary.simpleMessage(
+      "select all fields",
+    ),
     "selectCategory": MessageLookupByLibrary.simpleMessage("Select category"),
     "selectDate": MessageLookupByLibrary.simpleMessage("Select date"),
     "selectPaymentMethod": MessageLookupByLibrary.simpleMessage(
@@ -123,6 +131,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "selectTransactionDate": MessageLookupByLibrary.simpleMessage(
       "Select transaction date",
+    ),
+    "selectTransactionType": MessageLookupByLibrary.simpleMessage(
+      "Select transaction type",
     ),
     "selectType": MessageLookupByLibrary.simpleMessage(
       "Select transaction type",
@@ -134,9 +145,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "simplifyInventoryWithWMS": MessageLookupByLibrary.simpleMessage(
       "Warehouse management made easier with WMS",
-    ),
-    "startExperiencing": MessageLookupByLibrary.simpleMessage(
-      "Start experiencing",
     ),
     "sunday": MessageLookupByLibrary.simpleMessage("Sunday"),
     "syncData": MessageLookupByLibrary.simpleMessage("Sync data"),

@@ -1,7 +1,5 @@
 import 'package:drilly/model/transaction.dart';
-import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/service/transaction_service/transaction_service.dart';
-import 'package:drilly/utils/app_res.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/enum.dart';
 import 'package:drilly/utils/shared_pref.dart';
@@ -26,7 +24,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
          expenseTotal: totals['expense'] ?? 0.0));
         }
       } catch (e) {
-        print("Error loading home data: $e");
         emit(state.copyWith(
           status: ScreenState.error,
         ));

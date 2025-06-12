@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
-  ProfileScreen({
+  const ProfileScreen({
     super.key,
   });
 
@@ -22,7 +22,7 @@ class ProfileScreen extends StatelessWidget {
       create: (context) => ProfileBloc()..add(GetInfo()),
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          ProfileBloc bloc = context.read<ProfileBloc>();
+          context.read<ProfileBloc>();
           Profile profile = state.profile ?? Profile.empty();
           return Scaffold(
             backgroundColor: Colors.white,

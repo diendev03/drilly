@@ -8,8 +8,7 @@ import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/utils/style_res.dart';
 
 class DateTimeUtils {
-
- static String getCurrentDate({String format=ConstRes.normalDate}) {
+  static String getCurrentDate({String format = ConstRes.normalDate}) {
     DateTime now = DateTime.now();
 
     String formattedDate = DateFormat(format).format(now);
@@ -17,31 +16,13 @@ class DateTimeUtils {
     return formattedDate;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  static const String customFormat = 'yyyy-MM-dd HH-mm-ss';
-
+  static const String customFormat = 'yyyy-MM-dd HH:mm:ss';
   static const String formatTime = 'hh:mm a';
   static const String formatDate = 'MMM. d, yyyy';
   static const String formatDateHaft = 'MMM. d';
   static const String formatFull = 'hh:mm a EE, MMM. dd, yyyy';
   static const String formatHaft = 'EE, MMM. dd, yyyy';
   static const String formatDateTime = 'hh:mm a EE, MMM. dd';
-
-
-
-
-
 
   static String getStringTime(String? date) {
     final dateTime = getDateTime(date);
@@ -97,6 +78,10 @@ class DateTimeUtils {
     return DateFormat('HH:mm:ss').format(date);
   }
 
+  static String getDateTimeString(DateTime dt) {
+    return DateFormat(customFormat).format(dt);
+  }
+
   static String getRangeDate(DateTime startDate, DateTime endDate) {
     if (startDate.year == endDate.year &&
         startDate.month == endDate.month &&
@@ -135,7 +120,7 @@ class DateTimeUtils {
     }
   }
 
-   static Future<TimeOfDay?> pickerTime(
+  static Future<TimeOfDay?> pickerTime(
     BuildContext context,
     String time,
   ) async {

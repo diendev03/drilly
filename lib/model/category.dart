@@ -1,22 +1,22 @@
-class CategoryModel {
+class Category {
   final int? id;
   final String name;
   final String type; // 'income' or 'expense'
   final String? icon;
 
-  CategoryModel({
+  Category({
     this.id,
     required this.name,
     required this.type,
     this.icon,
   });
 
-  factory CategoryModel.fromJson(Map<String, dynamic> json) {
-    return CategoryModel(
+  factory Category .fromJson(Map<String, dynamic> json) {
+    return Category(
       id: json['id'],
       name: json['name'],
       type: json['type'],
-      icon: json['icons'],
+      icon: json['icon'],
     );
   }
 

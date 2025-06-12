@@ -80,14 +80,9 @@ class S {
     );
   }
 
-  /// `Start experiencing`
-  String get startExperiencing {
-    return Intl.message(
-      'Start experiencing',
-      name: 'startExperiencing',
-      desc: '',
-      args: [],
-    );
+  /// `Continue`
+  String get continue_ {
+    return Intl.message('Continue', name: 'continue_', desc: '', args: []);
   }
 
   /// `Login`
@@ -690,11 +685,61 @@ class S {
     return Intl.message('Note (optional)', name: 'note', desc: '', args: []);
   }
 
-  /// `Create Transaction`
+  /// `Create transaction`
   String get createTransaction {
     return Intl.message(
-      'Create Transaction',
+      'Create transaction',
       name: 'createTransaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recurring`
+  String get recurring {
+    return Intl.message('Recurring', name: 'recurring', desc: '', args: []);
+  }
+
+  /// `Choose date`
+  String get chooseDate {
+    return Intl.message('Choose date', name: 'chooseDate', desc: '', args: []);
+  }
+
+  /// `Repeat cycle`
+  String get repeatCycle {
+    return Intl.message(
+      'Repeat cycle',
+      name: 'repeatCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select transaction type`
+  String get selectTransactionType {
+    return Intl.message(
+      'Select transaction type',
+      name: 'selectTransactionType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can not be empty`
+  String get cannotBeEmpty {
+    return Intl.message(
+      'Can not be empty',
+      name: 'cannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select all fields`
+  String get selectAllFields {
+    return Intl.message(
+      'select all fields',
+      name: 'selectAllFields',
       desc: '',
       args: [],
     );

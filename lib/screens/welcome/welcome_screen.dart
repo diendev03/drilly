@@ -75,7 +75,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                               }
                             },
                             child: CustomButton(
-                              text: S.current.startExperiencing,
+                              text: S.current.continue_,
                             ),
                           ),
                           Align(

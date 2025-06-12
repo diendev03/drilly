@@ -1,10 +1,12 @@
 // ignore_for_file: unused_import, deprecated_member_use
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:drilly/screens/Auth/auth_screen.dart';
 import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/date_utils.dart';
 import 'package:drilly/utils/shared_pref.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -124,5 +126,51 @@ class AppRes {
         return child;
       },
     );
+  }
+  Future<Map<String, dynamic>> getDeviceDetails() async {
+    final deviceInfo = DeviceInfoPlugin();
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        final androidInfo = await deviceInfo.androidInfo;
+        return {
+          'platform': 'android',
+          'deviceId': androidInfo.id,
+          'model': androidInfo.model,
+          'brand': androidInfo.brand,
+        };
+      case TargetPlatform.iOS:
+        final iosInfo = await deviceInfo.iosInfo;
+        return {
+          'platform': 'ios',
+          'deviceId': iosInfo.identifierForVendor ?? 'unknown',
+          'model': iosInfo.utsname.machine,
+        };
+      case TargetPlatform.windows:
+        final winInfo = await deviceInfo.windowsInfo;
+        return {
+          'platform': 'windows',
+          'deviceId': winInfo.deviceId,
+          'computerName': winInfo.computerName,
+        };
+      case TargetPlatform.macOS:
+        final macInfo = await deviceInfo.macOsInfo;
+        return {
+          'platform': 'macos',
+          'deviceId': macInfo.systemGUID ?? 'unknown',
+          'model': macInfo.model,
+        };
+      case TargetPlatform.linux:
+        final linuxInfo = await deviceInfo.linuxInfo;
+        return {
+          'platform': 'linux',
+          'deviceId': linuxInfo.machineId ?? 'unknown',
+        };
+      default:
+        return {
+          'platform': 'unknown',
+          'deviceId': 'unknown',
+        };
+    }
   }
 }

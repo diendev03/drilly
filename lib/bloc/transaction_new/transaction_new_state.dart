@@ -1,3 +1,4 @@
+import 'package:drilly/model/category.dart';
 import 'package:drilly/utils/enum.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,10 +7,13 @@ class TransactionNewState extends Equatable {
   final String? message;
   final String? errorMessage;
 
-  final DateTime? transactionDate;
+  final String? transactionDate;
   final String? selectedType;
-  final String? selectedCategory;
+  final List<Category>categories;
+  final Category? selectedCategory;
   final String? selectedPayment;
+  final bool isRecurring;
+  final String? isRepeatCycle;
 
   const TransactionNewState({
     this.status = ScreenState.initial,
@@ -17,18 +21,24 @@ class TransactionNewState extends Equatable {
     this.errorMessage,
     this.transactionDate,
     this.selectedType,
+    this.categories = const [],
     this.selectedCategory,
     this.selectedPayment,
+    this.isRecurring = false,
+    this.isRepeatCycle,
   });
 
   TransactionNewState copyWith({
     ScreenState? status,
     String? message,
     String? errorMessage,
-    DateTime? transactionDate,
+    String? transactionDate,
     String? selectedType,
-    String? selectedCategory,
+    List<Category>? categories,
+    Category? selectedCategory,
     String? selectedPayment,
+    bool? isRecurring,
+    String? isRepeatCycle,
   }) {
     return TransactionNewState(
       status: status ?? this.status,
@@ -36,8 +46,11 @@ class TransactionNewState extends Equatable {
       errorMessage: errorMessage ?? this.errorMessage,
       transactionDate: transactionDate ?? this.transactionDate,
       selectedType: selectedType ?? this.selectedType,
+      categories: categories ?? this.categories,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       selectedPayment: selectedPayment ?? this.selectedPayment,
+      isRecurring: isRecurring ?? this.isRecurring,
+      isRepeatCycle: isRepeatCycle ?? this.isRepeatCycle,
     );
   }
 
@@ -48,7 +61,10 @@ class TransactionNewState extends Equatable {
     errorMessage,
     transactionDate,
     selectedType,
+    categories,
     selectedCategory,
     selectedPayment,
+    isRecurring,
+    isRepeatCycle,
   ];
 }
