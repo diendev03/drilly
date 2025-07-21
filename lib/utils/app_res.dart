@@ -4,7 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:drilly/screens/Auth/auth_screen.dart';
 import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/utils/const_res.dart';
-import 'package:drilly/utils/date_utils.dart';
+import 'package:drilly/utils/date_res.dart';
 import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,35 +21,6 @@ class AppRes {
     Get.offAll(() => const AuthScreen());
   }
 
-  static void saveLogin({required String uuid}) {
-    SharePref sharePref = SharePref();
-    sharePref.saveString(ConstRes.uuid, uuid);
-    sharePref.saveString(ConstRes.timeLogin,
-        DateTimeUtils.getCurrentDate(format: ConstRes.fullDate));
-  }
-
-  static Future<bool> checkAccount() async {
-    final sharePref = SharePref();
-
-    final uuid = await sharePref.getString(ConstRes.uuid);
-    final timeLoginStr = await sharePref.getString(ConstRes.timeLogin);
-    if (uuid == null || timeLoginStr == null) {
-      return false;
-    }
-
-    final timeLogin = DateFormat(ConstRes.fullDate).parse(timeLoginStr);
-
-    final currentTime = DateTime.now();
-
-    final difference = currentTime.difference(timeLogin);
-
-    if (difference.inDays < 7) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   static Future<SnackbarController?> showSnackBar(String msg,
       {bool type = false}) async {
     if (msg.replaceAll(' ', '').isEmpty) return null;
@@ -59,7 +30,6 @@ class AppRes {
             ? ColorRes.accent.withOpacity(.35)
             : ColorRes.primary.withOpacity(.25),
         titleText: Container(),
-        // backgroundColor: positive ? ColorRes.white : ColorRes.bitterSweet1,
         message: msg,
         messageText: Text(
           msg,
@@ -119,14 +89,6 @@ class AppRes {
     return images;
   }
 
-  static void showBottomSheet(BuildContext context,Widget child) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return child;
-      },
-    );
-  }
   Future<Map<String, dynamic>> getDeviceDetails() async {
     final deviceInfo = DeviceInfoPlugin();
 

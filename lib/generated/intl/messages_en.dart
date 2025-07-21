@@ -26,7 +26,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTransaction": MessageLookupByLibrary.simpleMessage("Add Transaction"),
     "amount": MessageLookupByLibrary.simpleMessage("Amount"),
     "appName": MessageLookupByLibrary.simpleMessage("Dilly"),
+    "authenticationFailed": MessageLookupByLibrary.simpleMessage(
+      "Authentication failed. Please login again.",
+    ),
     "bankCard": MessageLookupByLibrary.simpleMessage("Bank card"),
+    "canNotFindToken": MessageLookupByLibrary.simpleMessage(
+      "can\'t find token",
+    ),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "cannotBeEmpty": MessageLookupByLibrary.simpleMessage("Can not be empty"),
     "cash": MessageLookupByLibrary.simpleMessage("Cash"),
@@ -49,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "done": MessageLookupByLibrary.simpleMessage("Done"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "editProfile": MessageLookupByLibrary.simpleMessage("Edit profile"),
+    "email": MessageLookupByLibrary.simpleMessage("Email"),
     "emailAddress": MessageLookupByLibrary.simpleMessage("Email address"),
     "employeeLoginPanel": MessageLookupByLibrary.simpleMessage(
       "Employee Login Panel",
@@ -66,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Forgot password?",
     ),
     "friday": MessageLookupByLibrary.simpleMessage("Friday"),
+    "from": MessageLookupByLibrary.simpleMessage("From"),
     "inbox": MessageLookupByLibrary.simpleMessage("Inbox"),
     "income": MessageLookupByLibrary.simpleMessage("Income"),
     "invalidAmount": MessageLookupByLibrary.simpleMessage("Invalid amount"),
@@ -78,6 +86,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "monday": MessageLookupByLibrary.simpleMessage("Monday"),
     "name": MessageLookupByLibrary.simpleMessage("Name"),
     "next": MessageLookupByLibrary.simpleMessage("Next"),
+    "noDataIncomeExpense": MessageLookupByLibrary.simpleMessage(
+      "No income/expense data for this month",
+    ),
     "noImageSelected": MessageLookupByLibrary.simpleMessage(
       "No image selected",
     ),
@@ -86,6 +97,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "note": MessageLookupByLibrary.simpleMessage("Note (optional)"),
     "numberPhone": MessageLookupByLibrary.simpleMessage("Number phone"),
     "open": MessageLookupByLibrary.simpleMessage("Open"),
+    "overview": MessageLookupByLibrary.simpleMessage("Overview"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "passwordsDoNotMatch": MessageLookupByLibrary.simpleMessage(
       "Passwords do not match",
@@ -152,6 +164,16 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sync data description",
     ),
     "thursday": MessageLookupByLibrary.simpleMessage("Thursday"),
+    "to": MessageLookupByLibrary.simpleMessage("To"),
+    "totalIncomeExpenseLastWeek": MessageLookupByLibrary.simpleMessage(
+      "Total income/expenses for last week",
+    ),
+    "transactionFilter": MessageLookupByLibrary.simpleMessage(
+      "Transaction Filter",
+    ),
+    "transactionInThisWeek": MessageLookupByLibrary.simpleMessage(
+      "Transaction in this week",
+    ),
     "transactionName": MessageLookupByLibrary.simpleMessage("Transaction name"),
     "tuesday": MessageLookupByLibrary.simpleMessage("Tuesday"),
     "type": MessageLookupByLibrary.simpleMessage("Type"),
@@ -164,5 +186,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "version": MessageLookupByLibrary.simpleMessage("Version"),
     "viewAvatar": MessageLookupByLibrary.simpleMessage("View avatar"),
     "wednesday": MessageLookupByLibrary.simpleMessage("Wednesday"),
+    "youDoNotHaveAnyTransactionYet": MessageLookupByLibrary.simpleMessage(
+      "You do not have any transaction yet",
+    ),
+    "yourNameOrUsername": MessageLookupByLibrary.simpleMessage(
+      "Your name or username",
+    ),
   };
 }

@@ -745,6 +745,106 @@ class S {
     );
   }
 
+  /// `can't find token`
+  String get canNotFindToken {
+    return Intl.message(
+      'can\'t find token',
+      name: 'canNotFindToken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message('Email', name: 'email', desc: '', args: []);
+  }
+
+  /// `Your name or username`
+  String get yourNameOrUsername {
+    return Intl.message(
+      'Your name or username',
+      name: 'yourNameOrUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authentication failed. Please login again.`
+  String get authenticationFailed {
+    return Intl.message(
+      'Authentication failed. Please login again.',
+      name: 'authenticationFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No income/expense data for this month`
+  String get noDataIncomeExpense {
+    return Intl.message(
+      'No income/expense data for this month',
+      name: 'noDataIncomeExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transaction in this week`
+  String get transactionInThisWeek {
+    return Intl.message(
+      'Transaction in this week',
+      name: 'transactionInThisWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overview`
+  String get overview {
+    return Intl.message('Overview', name: 'overview', desc: '', args: []);
+  }
+
+  /// `Transaction Filter`
+  String get transactionFilter {
+    return Intl.message(
+      'Transaction Filter',
+      name: 'transactionFilter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total income/expenses for last week`
+  String get totalIncomeExpenseLastWeek {
+    return Intl.message(
+      'Total income/expenses for last week',
+      name: 'totalIncomeExpenseLastWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You do not have any transaction yet`
+  String get youDoNotHaveAnyTransactionYet {
+    return Intl.message(
+      'You do not have any transaction yet',
+      name: 'youDoNotHaveAnyTransactionYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get from {
+    return Intl.message('From', name: 'from', desc: '', args: []);
+  }
+
+  /// `To`
+  String get to {
+    return Intl.message('To', name: 'to', desc: '', args: []);
+  }
+
   /// `Press back again to exit!`
   String get pressBackAgainToExit {
     return Intl.message(

@@ -1,9 +1,9 @@
-// ignore_for_file: unused_import, deprecated_member_use
+// ignore_for_file: unused_import, deprecated_member_use, use_key_in_widget_constructors
 
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:drilly/model/category.dart';
 import 'package:flutter/services.dart';
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/utils/app_res.dart';
@@ -213,7 +213,7 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.action,
     required this.text,
-    this.textStyle = boldText,
+    this.textStyle = StyleRes.header,
   });
 
   @override
@@ -313,117 +313,6 @@ class DropdownAction {
   });
 }
 
-class DatePicker extends StatefulWidget {
-  final String? initialDate;
-  final ValueChanged<String> onDateChanged;
-
-  const DatePicker({
-    super.key,
-    this.initialDate,
-    required this.onDateChanged,
-  });
-
-  @override
-  DatePickerState createState() => DatePickerState();
-}
-
-class DatePickerState extends State<DatePicker> {
-  late String? _selectedDate;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedDate = widget.initialDate;
-  }
-
-  DateTime _parseDate(String? dateStr) {
-    if (dateStr == null) {
-      final now = DateTime.now();
-      return DateTime(now.year - 20, now.month, now.day);
-    }
-    try {
-      return DateFormat('yyyy-MM-dd').parse(dateStr);
-    } catch (_) {
-      final now = DateTime.now();
-      return DateTime(now.year - 20, now.month, now.day);
-    }
-  }
-
-  Future<void> _showDatePicker(BuildContext context) async {
-    final now = DateTime.now();
-    final initial = _parseDate(_selectedDate);
-    final firstDate = DateTime(now.year - 100);
-    final lastDate = DateTime(now.year);
-
-    showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        DateTime tempPickedDate = initial;
-        return Container(
-          height: 275,
-          color: Colors.white,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  initialDateTime: initial,
-                  minimumDate: firstDate,
-                  maximumDate: lastDate,
-                  onDateTimeChanged: (DateTime newDate) {
-                    tempPickedDate = newDate;
-                  },
-                ),
-              ),
-              CupertinoButton(
-                child: const Text('Done'),
-                onPressed: () {
-                  final formatted = DateFormat('yyyy-MM-dd').format(tempPickedDate);
-                  setState(() {
-                    _selectedDate = formatted;
-                  });
-                  widget.onDateChanged(formatted);
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final displayDate = _selectedDate ?? S.current.chooseYourBirthday;
-
-    return GestureDetector(
-      onTap: () => _showDatePicker(context),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade400),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.calendar_today_outlined, color: Colors.blue),
-            const SizedBox(width: 12),
-            Text(
-              displayDate,
-              style: TextStyle(
-                fontSize: 16,
-                color: _selectedDate == null ? Colors.grey.shade500 : Colors.black,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class CustomDropdownMenu extends StatelessWidget {
   final List<DropdownAction> actions;
   final Widget child;
@@ -499,12 +388,12 @@ class ImageFromUrl extends StatelessWidget {
 }
 
 class SpinningImageWidget extends StatefulWidget {
-  final String? imagePath;        // Đường dẫn ảnh local
-  final String? imageUrl;         // URL ảnh network
-  final Widget? child;            // Widget tùy chỉnh thay vì ảnh
-  final double size;              // Kích thước spinner
-  final Duration duration;        // Thời gian 1 vòng quay
-  final bool clockwise;           // Chiều quay (true: thuận chiều kim đồng hồ)
+  final String? imagePath; // Đường dẫn ảnh local
+  final String? imageUrl; // URL ảnh network
+  final Widget? child; // Widget tùy chỉnh thay vì ảnh
+  final double size; // Kích thước spinner
+  final Duration duration; // Thời gian 1 vòng quay
+  final bool clockwise; // Chiều quay (true: thuận chiều kim đồng hồ)
 
   const SpinningImageWidget({
     super.key,
@@ -592,7 +481,7 @@ class _SpinningImageWidgetState extends State<SpinningImageWidget>
             child: CircularProgressIndicator(
               value: loadingProgress.expectedTotalBytes != null
                   ? loadingProgress.cumulativeBytesLoaded /
-                  loadingProgress.expectedTotalBytes!
+                      loadingProgress.expectedTotalBytes!
                   : null,
             ),
           );
@@ -616,32 +505,178 @@ class _SpinningImageWidgetState extends State<SpinningImageWidget>
   }
 }
 
-class SpaceWidth extends StatelessWidget {
-  final double? width;
+class WSpace extends StatelessWidget {
+  final double width;
 
-  const SpaceWidth(this.width, {super.key});
+  const WSpace([this.width = 10]);
+
+  @override
+  Widget build(BuildContext context) => SizedBox(width: width);
+}
+
+class HSpace extends StatelessWidget {
+  final double height;
+
+  const HSpace([this.height = 10]);
+
+  @override
+  Widget build(BuildContext context) => SizedBox(height: height);
+}
+
+
+class MyLoading extends StatefulWidget {
+  final String assetPath;
+  final double size;
+  final int durationMs;
+
+  const MyLoading({
+    super.key,
+    this.assetPath=AssetRes.loading,
+    this.size = 45,
+    this.durationMs = 800,
+  });
+
+  @override
+  MyLoadingState createState() => MyLoadingState();
+}
+
+class MyLoadingState extends State<MyLoading>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: widget.durationMs),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return width != null
-        ? SizedBox(
-            width: width ?? 0,
-          )
-        : const Spacer();
+    return SizedBox(
+      width: widget.size,
+      height: widget.size,
+      child: RotationTransition(
+        turns: _ctrl,
+        child: Image.asset(widget.assetPath),
+      ),
+    );
   }
 }
 
-class SpaceHeight extends StatelessWidget {
-  final double? height;
+class CustomDateField extends StatelessWidget {
+  final String label;
+  final String? dateString;
+  final Function(String newDate) onChanged;
 
-  const SpaceHeight(this.height, {super.key});
+
+  const CustomDateField({
+    super.key,
+    required this.label,
+    required this.dateString,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return height != null
-        ? SizedBox(
-            width: height ?? 0,
-          )
-        : const Spacer();
+    final displayText = dateString ?? 'Select date';
+    return InkWell(
+      onTap: () async {
+        DateTime initial;
+        try {
+          initial = DateFormat('yyyy-MM-dd').parse(dateString!);
+        } catch (_) {
+          initial = DateTime.now();
+        }
+        final now = DateTime.now();
+        final picked = await showDatePicker(
+          context: context,
+          initialDate: initial,
+          firstDate: DateTime(now.year - 100, now.month, now.day),
+          lastDate: DateTime(now.year + 100, now.month, now.day),
+        );
+        if (picked != null) {
+          final formatted = DateFormat('yyyy-MM-dd').format(picked);
+          onChanged(formatted);
+        }
+      },
+      borderRadius: BorderRadius.circular(10),
+      child: InputDecorator(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          suffixIcon: const Icon(
+            Icons.calendar_today,
+            size: 15,
+            color: ColorRes.primary,
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: const BorderSide(color: ColorRes.primary),),
+        ),
+        child: Text('$label: $displayText')
+      ),
+    );
+  }
+}
+
+class CategoryPicker extends StatelessWidget {
+  final List<Category> categories;
+  final int? selectedId;
+  final ValueChanged<int?> onChanged;
+  final bool allowAll;
+
+  const CategoryPicker({
+    super.key,
+    required this.categories,
+    this.selectedId,
+    required this.onChanged,
+    this.allowAll = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final chips = <Widget>[];
+
+    if (allowAll) {
+      chips.add(
+        ChoiceChip(
+          label: const Text('All'),
+          selected: selectedId == null,
+          onSelected: (sel) => onChanged(sel ? null : selectedId),
+        ),
+      );
+    }
+
+    for (final cat in categories) {
+      chips.add(
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: ChoiceChip(
+            label: Text(cat.name),
+            selected: cat.id == selectedId,
+            selectedColor: cat.color?.withOpacity(0.8) ?? Theme.of(context).primaryColor,
+            backgroundColor: cat.id == selectedId?ColorRes.primary:Colors.grey[200],
+            labelStyle: TextStyle(
+              color: cat.id == selectedId
+                  ? Colors.white
+                  : Colors.black87,
+            ),
+            onSelected: (_) => onChanged(cat.id == selectedId ? null : cat.id),
+          ),
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(children: chips),
+    );
   }
 }

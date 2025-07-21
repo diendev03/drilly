@@ -94,5 +94,17 @@
   "selectTransactionType": "Select transaction type",
   "cannotBeEmpty": "Can not be empty",
   "selectAllFields": "select all fields",
+  "canNotFindToken": "can't find token",
+  "email": "Email",
+  "yourNameOrUsername": "Your name or username",
+  "authenticationFailed": "Authentication failed. Please login again.",
+  "noDataIncomeExpense": "No income/expense data for this month",
+  "transactionInThisWeek": "Transaction in this week",
+  "overview": "Overview",
+  "transactionFilter": "Transaction Filter",
+  "totalIncomeExpenseLastWeek": "Total income/expenses for last week",
+  "youDoNotHaveAnyTransactionYet": "You do not have any transaction yet",
+  "from": "From",
+  "to": "To",
   "pressBackAgainToExit": "Press back again to exit!"
 }

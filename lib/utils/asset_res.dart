@@ -2,7 +2,7 @@ class AssetRes {
   /// Images
   static const String logo = 'assets/images/logo.png';
   static const String logoTransparent = 'assets/images/logo_transparent.png';
-  static const String backgroundLogin = 'assets/images/background_login.png';
+  static const String backgroundLogin = 'assets/images/background.png';
   static const String loading = 'assets/images/loading.png';
   static const String chicken = 'assets/images/chicken.png';
 
@@ -13,5 +13,6 @@ class AssetRes {
   static const String icNotification = 'assets/icons/ic_notification.png';
   static const String icProfile = 'assets/icons/ic_profile.png';
   static const String icNewTransaction = 'assets/icons/ic_new_transaction.png';
-  // Sounds
+  static const String icIncome = 'assets/icons/ic_income.png';
+  static const String icExpense = 'assets/icons/ic_expense.png';
 }
