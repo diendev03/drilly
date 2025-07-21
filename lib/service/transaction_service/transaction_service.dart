@@ -1,21 +1,50 @@
 import 'package:dio/dio.dart';
+import 'package:drilly/model/transaction.dart';
 import 'package:drilly/service/api_client.dart';
+import 'package:drilly/service/base_response.dart';
 
 class TransactionService {
   final api = ApiClient();
-
-  Future<Response?> getAllTransactions({required String uuid}) async {
+  Future<BaseResponse<Map<String, dynamic>>> getSummary(
+      {required String from, required String to}) async {
     try {
-      Response response = await api.get('/transactions', params: {
-        'uuid': uuid,
+      final response = await api.get('/transaction/summary', params: {
+        "start_date": from,
+        "end_date": to,
       });
-      if (response.data["status"] == true) {
-        return response;
-      } else {
-        return null;
-      }
+      return BaseResponse<Map<String, dynamic>>.fromJsonGeneric(response.data);
     } catch (e) {
-      return null;
+      return BaseResponse<Map<String, dynamic>>(
+        status: false,
+        message: "Get summary failed",
+        data: {},
+      );
+    }
+  }
+
+  Future<BaseResponse<List<Transaction>>> getTransactions({
+    required String from,
+    required String to,
+    String? type,
+    int? category,
+  }) async {
+    try {
+      final response = await api.get('/transaction', params: {
+        "start_date": from,
+        "end_date": to,
+        if (type != null) "type": type,
+        if (category != null) "category": category,
+      });
+      return BaseResponse<List<Transaction>>.fromJsonList(
+        response.data,
+        (list) => list.map((e) => Transaction.fromJson(e)).toList(),
+      );
+    } catch (e) {
+      return BaseResponse<List<Transaction>>(
+        status: false,
+        message: "Get transactions failed",
+        data: [],
+      );
     }
   }
 
@@ -51,13 +80,10 @@ class TransactionService {
         'location': location,
       };
 
-      print("Request body: $body");
-      print("Request headers: $headers");
-
       Response response = await api.post(
         '/transactions',
         data: body,
-        headers:  headers,
+        headers: headers,
       );
 
       if (response.data != null && response.data["status"] == true) {
@@ -66,7 +92,6 @@ class TransactionService {
         return null;
       }
     } catch (e) {
-      print("Error when creating transaction: $e");
       return null;
     }
   }

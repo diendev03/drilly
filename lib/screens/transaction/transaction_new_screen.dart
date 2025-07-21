@@ -5,7 +5,6 @@ import 'package:drilly/generated/l10n.dart';
 import 'package:drilly/model/category.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/custom/custom_widget.dart';
-import 'package:drilly/utils/date_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,15 +35,8 @@ class _TransactionNewScreenState extends State<TransactionNewScreen> {
       );
 
       if (pickedTime != null) {
-        final fullDateTime = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
 
-        bloc.add(UpdateTransactionDate(DateTimeUtils.getDateTimeString(fullDateTime)));
+        // bloc.add(UpdateTransactionDate(DateRes.getDateTimeString(fullDateTime)));
       }
     }
   }
