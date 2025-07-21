@@ -53,8 +53,8 @@ class $AssetsImagesGen {
   AssetGenImage get employeeReport =>
       const AssetGenImage('assets/images/employee_report.png');
 
-  /// File path: assets/images/expense.png
-  AssetGenImage get expense => const AssetGenImage('assets/images/expense.png');
+  /// File path: assets/images/ic_expense.png
+  AssetGenImage get expense => const AssetGenImage('assets/images/ic_expense.png');
 
   /// File path: assets/images/ic_add_image.png
   AssetGenImage get icAddImage =>

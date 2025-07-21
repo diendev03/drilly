@@ -1,6 +1,8 @@
 import 'package:drilly/screens/main/main_screen.dart';
 import 'package:drilly/service/auth_service/auth_service.dart';
 import 'package:drilly/utils/app_res.dart';
+import 'package:drilly/utils/const_res.dart';
+import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   TextEditingController emailEC = TextEditingController();
   TextEditingController passwordEC = TextEditingController();
+  TextEditingController nameEC = TextEditingController();
   TextEditingController rePasswordEC = TextEditingController();
 
   AuthBloc() : super(AuthInitial()) {
@@ -37,11 +40,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             final response=await AuthService().login(
               email: emailEC.text, password:passwordEC.text,
             );
-            if(response!=null){
+            if(response.status){
               Navigator.of(Get.context!).pop();
-              AppRes.showSnackBar(S.current.login);
-              AppRes.saveLogin(uuid: response.data['data']['uuid']);
-              Get.off(()=>const MainScreen());
+              if(response.data!=null){
+                Get.off(()=>const MainScreen());
+                SharePref().saveString(ConstRes.token, response.data??"",);
+              }else{
+                AppRes.showSnackBar(S.current.canNotFindToken);
+              }
             }
           } catch (e) {
             if (Navigator.of(Get.context!).canPop()) {
@@ -63,14 +69,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await AppRes.showCustomLoader();
         if (validationRegistration()) {
           try {
-            final account = await AuthService().signUpAndSaveUser(
+            final response = await AuthService().signUpAndSaveUser(name: nameEC.text,
                 email: emailEC.text, password: passwordEC.text);
-            if (account != null) {
+            if (response.status) {
               Navigator.of(Get.context!).pop();
-              AppRes.showSnackBar(S.current.registrationSuccessful, type: true);
+              AppRes.showSnackBar(response.message, type: true);
               add(ShowLogin());
             } else {
-              AppRes.showSnackBar(S.current.registrationFailed);
+              Navigator.of(Get.context!).pop();
+              AppRes.showSnackBar(response.message);
             }
           } catch (e) {
             Navigator.of(Get.context!).pop();

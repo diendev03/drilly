@@ -8,7 +8,7 @@ import 'package:drilly/utils/asset_res.dart';
 import 'package:drilly/utils/color_res.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:drilly/utils/custom/custom_widget.dart';
-import 'package:drilly/utils/date_utils.dart';
+import 'package:drilly/utils/date_res.dart';
 import 'package:drilly/generated/l10n.dart';
 import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +26,21 @@ class _WelComeScreenState extends State<WelComeScreen> {
   String version = "";
   SharePref sharePref = SharePref();
 
-  Future<bool> checkAccount() async {
-    String drillierId = await sharePref.getString(ConstRes.drillierId) ?? "";
-    return drillierId.isNotEmpty;
+  @override
+  void initState() {
+    checkAccount();
+    super.initState();
+  }
+
+  Future<void> checkAccount() async {
+    await Future.delayed(const Duration(milliseconds: 500)); // cho logo hiện nhẹ 1 chút
+    String token = await sharePref.getString(ConstRes.token) ?? "";
+
+    if (token.isNotEmpty) {
+      Get.offAll(() => const MainScreen());
+    } else {
+      Get.offAll(() => const AuthScreen());
+    }
   }
 
   @override
@@ -66,14 +78,7 @@ class _WelComeScreenState extends State<WelComeScreen> {
                         children: [
                           const SizedBox(height: 20),
                           GestureDetector(
-                            onTap: () async {
-                              bool checkLogin= await AppRes.checkAccount();
-                              if(checkLogin==true){
-                                Get.off(() => const MainScreen());
-                              }else{
-                                Get.off(() => const AuthScreen());
-                              }
-                            },
+                            onTap: () async => checkAccount(),
                             child: CustomButton(
                               text: S.current.continue_,
                             ),
@@ -99,8 +104,8 @@ class _WelComeScreenState extends State<WelComeScreen> {
                                   );
                                 } else {
                                   return Text(
-                                    DateTimeUtils.getCurrentDate(
-                                        format: ConstRes.versionDate),
+                                    DateRes.getToday(
+                                        format: DateRes.versionDate),
                                     style: const TextStyle(
                                         fontSize: 16, color: Colors.grey),
                                   );

@@ -1,8 +1,11 @@
+import 'package:drilly/model/category.dart';
 import 'package:drilly/model/transaction.dart';
+import 'package:drilly/service/base_response.dart';
+import 'package:drilly/service/category_service/category_service.dart';
 import 'package:drilly/service/transaction_service/transaction_service.dart';
-import 'package:drilly/utils/const_res.dart';
+import 'package:drilly/utils/app_res.dart';
+import 'package:drilly/utils/date_res.dart';
 import 'package:drilly/utils/enum.dart';
-import 'package:drilly/utils/shared_pref.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'home_event.dart';
@@ -11,41 +14,88 @@ import 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
     on<LoadHome>((event, emit) async {
+      emit(state.copyWith(status: ScreenState.loading));
+      String today = DateRes.getToday(), lastWeek = DateRes.getLastWeek();
       try {
-        final uuid =await SharePref().getString(ConstRes.uuid)??"";
-        final response = await TransactionService().getAllTransactions(uuid: uuid);
-        if (response != null) {
-          List<Transaction>transactions = (response.data['data'] as List)
-              .map((e) => Transaction.fromJson(e))
-              .toList();
-          final totals = calculateTotals(transactions);
-         emit(state.copyWith(uuid: uuid,status: ScreenState.success,transactions: transactions,
-         incomeTotal: totals['income'] ?? 0.0,
-         expenseTotal: totals['expense'] ?? 0.0));
+        final summaryFuture = TransactionService().getSummary(
+            from: DateRes.getStartMonth(), to: DateRes.getEndMonth());
+        final txFuture =
+            TransactionService().getTransactions(from: lastWeek, to: today);
+        final catFuture = CategoryService().getAllCategories();
+
+        final responses = await Future.wait([
+          summaryFuture,
+          txFuture,
+          catFuture,
+        ]);
+
+        final summaryRes = responses[0] as BaseResponse<Map<String, dynamic>>;
+        final txRes = responses[1] as BaseResponse<List<Transaction>>;
+        final catRes = responses[2] as BaseResponse<List<Category>>;
+
+        // Handle errors
+        if (summaryRes.data == null) {
+          emit(state.copyWith(status: ScreenState.error));
+          AppRes.showSnackBar(summaryRes.message);
+          return;
         }
-      } catch (e) {
+        if (txRes.data == null) {
+          emit(state.copyWith(status: ScreenState.error));
+          AppRes.showSnackBar(txRes.message);
+          return;
+        }
+        if (catRes.data == null) {
+          emit(state.copyWith(status: ScreenState.error));
+          AppRes.showSnackBar(catRes.message);
+          return;
+        }
+
+        // Parse numbers only once
+        final totalIncome = double.tryParse(
+              summaryRes.data!['total_income']?.toString() ?? '0',
+            ) ??
+            0.0;
+        final totalExpense = double.tryParse(
+              summaryRes.data!['total_expense']?.toString() ?? '0',
+            ) ??
+            0.0;
+
+        // Emit a single success state
         emit(state.copyWith(
-          status: ScreenState.error,
-        ));
+            status: ScreenState.success,
+            incomeTotal: totalIncome,
+            expenseTotal: totalExpense,
+            transactions: txRes.data!,
+            categories: catRes.data!,
+            startDate: lastWeek,
+            endDate: today,
+            filteredTransactions: txRes.data!));
+      } catch (e, st) {
+        // Optional: log error/st
+        emit(state.copyWith(status: ScreenState.error));
+        AppRes.showSnackBar('An unexpected error occurred');
       }
     });
+    on<FilterTransaction>((event, emit) async {
+      List<Transaction> filtered = [];
+      bool isIncome = event.isIncome ?? state.isIncome;
+      final response=await TransactionService().getTransactions(
+        from: event.startDate??state.startDate,
+        to: event.endDate??state.endDate,
+        type:isIncome ? 'income' : 'expense',
+        category: event.category,
+      );
+      if (response.status == false) {
+        AppRes.showSnackBar(response.message);
+      }
+      filtered= response.data ?? [];
+      emit(state.copyWith(
+        startDate: event.startDate??state.startDate,
+        endDate: event.endDate??state.endDate,
+        isIncome: event.isIncome ?? state.isIncome,
+        selCate: event.category ?? state.selCate,
+        filteredTransactions: filtered,
+      ));
+  });
   }
-}
-Map<String, double> calculateTotals(List<Transaction> transactions) {
-  double income = 0;
-  double expense = 0;
-
-  for (var t in transactions) {
-    final amount = double.tryParse(t.amount.toString()) ?? 0;
-    if (t.type == 'income') {
-      income += amount;
-    } else if (t.type == 'expense') {
-      expense += amount;
-    }
-  }
-
-  return {
-    'income': income,
-    'expense': expense,
-  };
 }

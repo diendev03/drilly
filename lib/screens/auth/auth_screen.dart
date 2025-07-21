@@ -111,8 +111,13 @@ class AuthScreen extends StatelessWidget {
                             ] else if (state is RegistrationState) ...[
                               // Registration UI
                               TextWithTextFieldWidget(
-                                title: S.current.username,
+                                title: S.current.email,
                                 controller: bloc.emailEC,
+                              ),
+                              const SizedBox(height: 20),
+                              TextWithTextFieldWidget(
+                                title: S.current.yourNameOrUsername,
+                                controller: bloc.nameEC,
                               ),
                               const SizedBox(height: 20),
                               TextWithTextFieldWidget(

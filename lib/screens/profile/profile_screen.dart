@@ -46,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                       Icons.settings,
                       color: ColorRes.black,
                     )),
-                const SpaceWidth(20)
+                const WSpace(20)
               ],
             ),
             body: Padding(
@@ -67,7 +67,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SpaceHeight(15),
+                  const HSpace(15),
                   Center(
                     child: Text(
                       profile.name,

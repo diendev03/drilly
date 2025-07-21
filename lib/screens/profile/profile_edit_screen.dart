@@ -73,11 +73,7 @@ class ProfileEditScreen extends StatelessWidget {
                     title: S.current.numberPhone,
                     controller: bloc.phoneEC,
                   ),
-                  DatePicker(
-                      initialDate: profile.birthday,
-                      onDateChanged: (newDateString) {
-                        bloc.birthdayEC.text = newDateString; // 2025-05-26
-                      }),
+
                   Align(
                     alignment: Alignment.center,
                     child: CustomButton(

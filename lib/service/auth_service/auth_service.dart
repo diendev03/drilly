@@ -1,4 +1,6 @@
 // ignore_for_file: await_only_futures, avoid_print
+
+import 'package:drilly/service/base_response.dart';
 import 'package:drilly/utils/const_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloudinary/cloudinary.dart';
@@ -6,51 +8,30 @@ import 'package:cloudinary/cloudinary.dart';
 import '../api_client.dart';
 
 class AuthService {
-  String accountTable = ConstRes.accounts;
-  String profileTable = ConstRes.profiles;
   Dio dio = Dio();
   final api = ApiClient();
   //Create user in Firebase and save to database
-  Future<Response?> signUpAndSaveUser({
+  Future<BaseResponse<String>> signUpAndSaveUser({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
-      final existingUser =
-          await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
-      if (existingUser.isNotEmpty) {
-        throw FirebaseAuthException(
-          code: 'email-already-in-use',
-          message: 'Email này đã được sử dụng cho một tài khoản khác.',
-        );
-      }
-
-      UserCredential firebaseResponse =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      String uid = firebaseResponse.user!.uid;
-
-      Response response = await api.post('/accounts', data: {
-        'uuid': uid,
+      final response = await api.post(ConstRes.registerEP, data: {
+        'name': name,
         'email': email,
         'password': password,
       });
-
-      if (response.data["status"]== true) {
-        print('Tạo account thành công: ${response.data}');
-        return response;
-      } else {
-        print('Tạo account thất bại: ${response.statusMessage}');
-        return null;
-      }
+      return BaseResponse<String>.fromJsonGeneric(response.data);
     } catch (e) {
-      print('Tạo account thất bại: ${e.toString()}');
-      return null;
+      return BaseResponse<String>(
+        status: false,
+        message: "Đăng Ký thất bại",
+        data: e.toString(),
+      );
     }
   }
+
   //Forgot password
   Future<void> forgotPassword(String email) async {
     try {
@@ -60,29 +41,27 @@ class AuthService {
       print("Lỗi khi gửi email reset mật khẩu: $e");
     }
   }
+
   //Login
-  Future<Response?> login({
+  Future<BaseResponse<String>> login({
     required String email,
     required String password,
   }) async {
     try {
-      print("Đang đăng nhập với email: $email và mật khẩu: $password");
-      final response = await api.post('/accounts/login', data: {
-        ConstRes.email: email,
-        ConstRes.password: password,
+      final response = await api.post(ConstRes.loginEP, data: {
+        "email": email,
+        "password": password,
       });
-      if (response.data["status"]== true) {
-        print('Login thành công: ${response.data}');
-        print('tra ve: ${response.toString()}');
-        return response;
-      } else {
-        print('Login thất bại: ${response.statusMessage}');
-        return null;
-      }
+      return BaseResponse<String>.fromJsonGeneric(response.data);
     } catch (e) {
-      return null;
+      return BaseResponse<String>(
+        status: false,
+        message: "Đăng nhập thất bại",
+        data: e.toString(),
+      );
     }
   }
+
   //Get user profile
   Future<Response?> getUserProfile({required String uuid}) async {
     try {
@@ -101,6 +80,7 @@ class AuthService {
       return null;
     }
   }
+
   //Update user profile
   Future<Response> updateProfile({
     required String uuid,
@@ -110,7 +90,7 @@ class AuthService {
     String? avatarUrl,
   }) async {
     try {
-      Response response =await api.put('/profiles', data: {
+      Response response = await api.put('/profiles', data: {
         'uuid': uuid,
         'name': name,
         'birthday': birthday,
@@ -120,7 +100,8 @@ class AuthService {
       if (response.data["status"] == true) {
         print('Cập nhật thông tin người dùng thành công: ${response.data}');
       } else {
-        print('Cập nhật thông tin người dùng thất bại: ${response.statusMessage}');
+        print(
+            'Cập nhật thông tin người dùng thất bại: ${response.statusMessage}');
       }
       return response;
     } catch (e) {

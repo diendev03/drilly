@@ -19,18 +19,7 @@ class TransactionNewBloc
 
   TransactionNewBloc() : super(const TransactionNewState()) {
     on<Initialize>((event, emit) async {
-      String? uuid = await SharePref().getString(ConstRes.uuid);
-      if (uuid != null) {
-        final categoriesResponse =
-            await CategoryService().getAllCategories(uuid: uuid);
-        print("Categories Response: ${categoriesResponse?.data["data"]}");
-        List<Category> categories = [];
-        if (categoriesResponse != null && categoriesResponse.data != null) {
-          categories = (categoriesResponse.data["data"] as List).map((e) => Category.fromJson(e))
-              .toList();
-        }
-        emit(state.copyWith(categories: categories));
-      }
+
     });
 
     on<UpdateSelectedType>((event, emit) {
@@ -65,7 +54,6 @@ class TransactionNewBloc
       String? uuid = await SharePref().getString(ConstRes.uuid) ?? "";
 
       if (uuid.isEmpty) {
-        print("UUID không hợp lệ");
         emit(state.copyWith(
           status: ScreenState.error,
           message: null,
